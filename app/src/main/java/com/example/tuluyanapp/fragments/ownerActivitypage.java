@@ -1,5 +1,6 @@
 package com.example.tuluyanapp.fragments;
 
+import android.content.Intent; // Import for Intent
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,14 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.chatfunction;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ownerActivitypage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ownerActivitypage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -25,6 +24,7 @@ public class ownerActivitypage extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public ownerActivitypage() {
         // Required empty public constructor
@@ -57,10 +57,16 @@ public class ownerActivitypage extends Fragment {
         }
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tenant_activitypage, container, false);
+        View view = inflater.inflate(R.layout.fragment_owner_activitypage, container, false);
+
+        ImageView messageBtn = view.findViewById(R.id.messageBtn);
+        messageBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), chatfunction.class);
+            startActivity(intent);
+        });
+
+        return view;
     }
 }

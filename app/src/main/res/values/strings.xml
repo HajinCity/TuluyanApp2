@@ -1,7 +1,10 @@
 <resources>
+    <string name="default_web_client_id">973930498755-c45vbq8ma07d2e50gi7rri91q1u8ige5.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">https://tuluyan-user-login.firebaseapp.com/__/auth/handler</string>
     <string name="app_name">TuluyanApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app">Tuluyan</string>
     <string name="app1">Welcome to</string>
     <string name="app2">Discover your ideal boarding house.</string>
     <string name="app3">tuluyan.</string>
@@ -14,7 +17,7 @@
     <string name="app10">Login</string>
     <string name="app11">Or Sign up with</string>
     <string name="app12">Create Account</string>
-    <string name="app13">By registering, you are agreeing with our <a href="http://www.yourwebsite.com/terms" style="color:blue;">Terms of Use</a> and <a href="http://www.yourwebsite.com/privacy" style="color:blue;">Privacy Policy</a>.</string>
+    <string name="app13">By registering, you are agreeing with our <a style="color:blue;" href="http://www.yourwebsite.com/terms">Terms of Use</a> and <a style="color:blue;" href="http://www.yourwebsite.com/privacy">Privacy Policy</a>.</string>
     <string name="app14">Already have an account?</string>
     <string name="app15">Register</string>
     <string name="app16">Google</string>
@@ -78,18 +81,13 @@
     <string name="app77">Save</string>
     <string name="app78">Save</string>
     <string name="app79">Save</string>
-    <string name="app80">Save</string>
-    <string name="app81">Save</string>
-    <string name="app82">Save</string>
-
-
-
-
-
+    <string name="app80">Chats</string>
+    <string name="app81">Notifications</string>
+    <string name="app82">Messages</string>
 
 
     <string name="privacy">
-    By registering, you are agreeing with our <a href="http://www.yourwebsite.com/terms" style="color:blue;">Terms of Use</a> and <a href="http://www.yourwebsite.com/privacy" style="color:blue;">Privacy Policy</a>.
+    By registering, you are agreeing with our <a style="color:blue;" href="http://www.yourwebsite.com/terms">Terms of Use</a> and <a style="color:blue;" href="http://www.yourwebsite.com/privacy">Privacy Policy</a>.
 </string>
 
 

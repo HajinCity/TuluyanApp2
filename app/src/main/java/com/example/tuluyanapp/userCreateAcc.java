@@ -25,25 +25,23 @@ public class userCreateAcc extends AppCompatActivity {
     private CheckBox checkBoxPrivacy;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;  // Firestore instance
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_create_acc);
 
-        // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Link UI elements with the code
         editTextName = findViewById(R.id.editTextTextName);
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextTextConfrim);
         Button buttonCreateAccount = findViewById(R.id.createAccountButton);
         checkBoxPrivacy = findViewById(R.id.checkBox);
-        progressBar = findViewById(R.id.progressBar4); // Link the ProgressBar with its XML element
+        progressBar = findViewById(R.id.progressBar4);
 
         buttonCreateAccount.setOnClickListener(v -> {
             String name = editTextName.getText().toString().trim();
@@ -79,16 +77,15 @@ public class userCreateAcc extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            // Register user with Firebase Authentication
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(userCreateAcc.this, task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            // Store user data in Firestore
-                            storeUserData(name, email); // Call without password
+
+                            storeUserData(name, email);
 
                             Toast.makeText(userCreateAcc.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
-                            // Redirect to login page or main dashboard
+
                             startActivity(new Intent(userCreateAcc.this, userLogin.class));
                             finish();
                         } else {
@@ -99,7 +96,7 @@ public class userCreateAcc extends AppCompatActivity {
     }
 
     private void storeUserData(String name, String email) {
-        // Create a new user data map
+
         Map<String, Object> tenantData = new HashMap<>();
         tenantData.put("First-Name", name);
         tenantData.put("useraccount", email);
