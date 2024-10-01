@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">TuluyanApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app1">Welcome to</string>
+    <string name="app2">Discover your ideal boarding house.</string>
+    <string name="app3">tuluyan.</string>
+    <string name="app4">Are you a user?</string>
+    <string name="app5">Are you an owner?</string>
+    <string name="app6">Username</string>
+    <string name="app7">Password</string>
+    <string name="app8">Forgot Password?</string>
+    <string name="app9">Create Account?</string>
+    <string name="app10">Login</string>
+    <string name="app11">Or Sign up with</string>
+    <string name="app12">Create Account</string>
+    <string name="app13">By registering, you are agreeing with our <a href="http://www.yourwebsite.com/terms" style="color:blue;">Terms of Use</a> and <a href="http://www.yourwebsite.com/privacy" style="color:blue;">Privacy Policy</a>.</string>
+    <string name="app14">Already have an account?</string>
+    <string name="app15">Register</string>
+    <string name="app16">Google</string>
+    <string name="app17">Facebook</string>
+    <string name="app18">Apple</string>
+    <string name="app19">Your Location</string>
+    <string name="app20">Home</string>
+    <string name="app21">Map</string>
+    <string name="app22">Search</string>
+    <string name="app23">Activity</string>
+    <string name="app24">Profile</string>
+    <string name="app25">Near you</string>
+    <string name="app26">New Listing</string>
+    <string name="app28">Post</string>
+    <string name="app29">Manage</string>
+    <string name="app30">Confirm Password</string>
+    <string name="app31">Name</string>
+    <string name="app32">Email Address</string>
+    <string name="forgottxt">Enter the email or phone number, we will send you the OTP.</string>
+    <string name="app34">Enter the email or phone number</string>
+    <string name="app35">Welcome back</string>
+    <string name="app37">Lucy,</string>
+    <string name="app39">No. of</string>
+    <string name="app40">Listings</string>
+    <string name="app41">Engagements</string>
+    <string name="app42">views per day</string>
+    <string name="app43">Popular listing</string>
+    <string name="app44">Bookmarks</string>
+    <string name="app45">Applications</string>
+    <string name="app46">Help</string>
+    <string name="app47">Settings</string>
+    <string name="app48">Logout</string>
+    <string name="app49">Edit Profile</string>
+    <string name="app50"> Monkey D. Luffy</string>
+    <string name="app51">\u0040monkeyluffy</string>
+    <string name="app52">Edit Profile</string>
+    <string name="app53">Personal Details</string>
+    <string name="app54">First Name</string>
+    <string name="app55">Last Name</string>
+    <string name="app56">Mobile Number</string>
+    <string name="app57">Email Address</string>
+    <string name="app58">Address</string>
+    <string name="app59">Monkey</string>
+    <string name="app60">Luffy</string>
+    <string name="app61">Mobile Number</string>
+    <string name="app62">09123456789</string>
+    <string name="app63">Email Address</string>
+    <string name="app64">monkeyluffy@gmail.com</string>
+    <string name="app65">Address</string>
+    <string name="app66">Pagadian City, ZDS</string>
+    <string name="app67">Cancel</string>
+    <string name="app68">Save</string>
+    <string name="app69">Add new</string>
+    <string name="app70">Listing</string>
+    <string name="app71">title</string>
+    <string name="app72">Save</string>
+    <string name="app73">Save</string>
+    <string name="app74">Save</string>
+    <string name="app75">Save</string>
+    <string name="app76">Save</string>
+    <string name="app77">Save</string>
+    <string name="app78">Save</string>
+    <string name="app79">Save</string>
+    <string name="app80">Save</string>
+    <string name="app81">Save</string>
+    <string name="app82">Save</string>
+
+
+
+
+
+
+
+    <string name="privacy">
+    By registering, you are agreeing with our <a href="http://www.yourwebsite.com/terms" style="color:blue;">Terms of Use</a> and <a href="http://www.yourwebsite.com/privacy" style="color:blue;">Privacy Policy</a>.
+</string>
+
+
+</resources>

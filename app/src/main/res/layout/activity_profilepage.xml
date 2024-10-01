@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.profilepage">
+
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:src="@drawable/blue_bg"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-8dp" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="match_parent"
+        android:layout_height="119dp"
+        android:src="@drawable/ellipse"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-34dp"
+        tools:layout_editor_absoluteY="51dp" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/app50"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView33"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="140dp" />
+
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="@string/app51"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/circularImageView"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/circularImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/luffy"
+        app:circularflow_defaultRadius="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintEnd_toStartOf="@+id/textView31"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        tools:ignore="MissingClass,MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/bookmark"
+        android:drawablePadding="25dp"
+        android:layout_marginStart="15dp"
+        android:ems="10"
+        android:hint="@string/app44"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBookmarks"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextBookmarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edit_rounded"
+        android:drawableStart="@drawable/edit"
+        android:drawablePadding="15dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:ems="10"
+        android:hint="@string/app49"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/imageView13"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/setting"
+        android:drawablePadding="25dp"
+        android:ems="10"
+        android:hint="@string/app47"
+        android:layout_marginStart="15dp"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextLogout"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHelp"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextApplication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/document"
+        android:drawablePadding="25dp"
+        android:ems="10"
+        android:layout_marginStart="15dp"
+        android:hint="@string/app45"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfile"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/question"
+        android:drawablePadding="25dp"
+        android:ems="10"
+        android:hint="@string/app46"
+        android:layout_marginStart="15dp"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/editTextApplication"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableStart="@drawable/logout"
+        android:drawablePadding="25dp"
+        android:ems="10"
+        android:hint="@string/app48"
+        android:minHeight="48dp"
+        android:layout_marginStart="15dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="610dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

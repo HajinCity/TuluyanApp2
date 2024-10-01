@@ -1,0 +1,19 @@
+<resources  xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TuluyanApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.TuluyanApp" parent="Base.Theme.TuluyanApp" />
+    
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/white</item>
+
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.circleImageView" parent="">
+            <item name="cornerFamily">rounded</item>
+            <item name="cornerSize">20dp</item>
+    </style>
+</resources>

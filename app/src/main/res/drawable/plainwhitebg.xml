@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFCFC"/> <!-- Background color of TextView -->
+    <stroke
+        android:color="@color/white"/> <!-- Border color -->
+    <corners android:radius="30dp"/> <!-- Border radius -->
+</shape>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Tnav_home"
+        android:icon="@drawable/home_1"
+        android:title="@string/app20"
+        />
+    <item
+        android:id="@+id/Tnav_post"
+        android:icon="@drawable/post"
+        android:title="@string/app28"
+        />
+    <item
+        android:id="@+id/Tnav_manage"
+        android:icon="@drawable/post1"
+        android:title="@string/app29"
+        />
+    <item
+        android:id="@+id/Tnav_activity"
+        android:icon="@drawable/notification_status1"
+        android:title="@string/app23"
+        />
+    <item
+        android:id="@+id/Tnav_profile"
+        android:icon="@drawable/frame1"
+        android:title="@string/app24"
+        />
+</menu>
