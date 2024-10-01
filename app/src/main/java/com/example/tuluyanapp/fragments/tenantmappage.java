@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tuluyanapp.R;
 
-public class mappage extends Fragment {
+public class tenantmappage extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

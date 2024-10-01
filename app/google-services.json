@@ -1,0 +1,30 @@
+
+{
+  "project_info": {
+    "project_number": "973930498755",
+    "project_id": "tuluyan-user-login",
+    "storage_bucket": "tuluyan-user-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973930498755:android:8937e474d672657255b076",
+        "android_client_info": {
+          "package_name": "com.example.tuluyanapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxKtSfKXwFnqsXYdjxwhhig_JrlOk3uYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

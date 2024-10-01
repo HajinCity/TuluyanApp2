@@ -19,7 +19,7 @@
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/app30"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="15dp"
         android:textColor="@color/black"
@@ -75,7 +75,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginbtn"
+        android:id="@+id/createAccountButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/blue_bg"
@@ -172,7 +172,7 @@
         app:layout_constraintVertical_bias="0.283" />
 
     <EditText
-        android:id="@+id/editTextTextEmail1"
+        android:id="@+id/editTextTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
@@ -195,6 +195,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.141" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
