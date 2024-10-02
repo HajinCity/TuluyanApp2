@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tuluyanapp.R;
 
-public class tenantmappage extends Fragment {
+public class Tenantsearchpage extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class tenantmappage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_mappage, container, false);
+        View view = inflater.inflate(R.layout.activity_searchpage, container, false);
 
         // Set up window insets for edge-to-edge layout
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {

@@ -9,11 +9,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.tuluyanapp.fragments.tenantactivitypage;
-import com.example.tuluyanapp.fragments.tenanthomepage;
-import com.example.tuluyanapp.fragments.tenantmappage;
-import com.example.tuluyanapp.fragments.tenantprofilepage;
-import com.example.tuluyanapp.fragments.tenantsearchpage;
+import com.example.tuluyanapp.fragments.TenantActivitypage;
+import com.example.tuluyanapp.fragments.TenantHomepage;
+import com.example.tuluyanapp.fragments.TenantMappage;
+import com.example.tuluyanapp.fragments.TenantProfilepage;
+import com.example.tuluyanapp.fragments.Tenantsearchpage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -34,7 +34,7 @@ public class MainActivity3 extends AppCompatActivity {
         btmnav.setSelectedItemId(R.id.nav_home);  // Corrected method name
         btmnav.setOnItemSelectedListener(navListener);  // Corrected method name
 
-        Fragment selectedFragment = new tenanthomepage();
+        Fragment selectedFragment = new TenantHomepage();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }
 
@@ -43,15 +43,15 @@ public class MainActivity3 extends AppCompatActivity {
         Fragment selected = null;
 
         if (itemId == R.id.nav_home) {
-            selected = new tenanthomepage();
+            selected = new TenantHomepage();
         } else if (itemId == R.id.nav_map) {
-            selected = new tenantmappage();
+            selected = new TenantMappage();
         } else if (itemId == R.id.nav_search) {
-            selected = new tenantsearchpage();
+            selected = new Tenantsearchpage();
         } else if (itemId == R.id.nav_activity) {
-            selected = new tenantactivitypage();
+            selected = new TenantActivitypage();
         } else if (itemId == R.id.nav_profile) {
-            selected = new tenantprofilepage();
+            selected = new TenantProfilepage();
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selected).commit();

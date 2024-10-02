@@ -12,9 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tuluyanapp.R;
-import com.example.tuluyanapp.help;
+import com.example.tuluyanapp.TenantHelp;
 
-public class tenantprofilepage extends Fragment {
+public class TenantProfilepage extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class tenantprofilepage extends Fragment {
             helpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent userLoginIntent = new Intent(getActivity(), help.class);
+                    Intent userLoginIntent = new Intent(getActivity(), TenantHelp.class);
                     startActivity(userLoginIntent);
                 }
             });

@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tuluyanapp.R;
 
-public class tenanthomepage extends Fragment {
+public class TenantHomepage extends Fragment {
 
     private EditText editText;
 

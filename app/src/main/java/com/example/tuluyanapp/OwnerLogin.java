@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ownerLogin extends AppCompatActivity {
+public class OwnerLogin extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
@@ -67,13 +67,13 @@ public class ownerLogin extends AppCompatActivity {
 
             // Sign in user using Firebase Authentication
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(ownerLogin.this, task -> {
+                    .addOnCompleteListener(OwnerLogin.this, task -> {
                         if (task.isSuccessful()) {
                             // Fetch user data from Firestore for the authenticated landlord
                             fetchOwnerData();
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(ownerLogin.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(OwnerLogin.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
         });
@@ -81,14 +81,14 @@ public class ownerLogin extends AppCompatActivity {
         // Set up "Create Account" link
         TextView textView = findViewById(R.id.textView8);
         textView.setOnClickListener(v -> {
-            Intent intent = new Intent(ownerLogin.this, ownerCreateAcc.class);
+            Intent intent = new Intent(OwnerLogin.this, OwnerCreateAcc.class);
             startActivity(intent);
         });
 
         // Set up "Forgot Password" link
         TextView textView1 = findViewById(R.id.textView7);
         textView1.setOnClickListener(v -> {
-            Intent intent = new Intent(ownerLogin.this, ownerfgp.class);
+            Intent intent = new Intent(OwnerLogin.this, Ownerfgp.class);
             startActivity(intent);
         });
     }
@@ -108,24 +108,24 @@ public class ownerLogin extends AppCompatActivity {
                         if (document.exists()) {
                             // Get the data and proceed to the dashboard or next activity
                             String name = document.getString("First-Name");
-                            Toast.makeText(ownerLogin.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OwnerLogin.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
 
                             // Redirect to MainActivity4 (dashboard or main screen for landlords)
-                            Intent intent = new Intent(ownerLogin.this, MainActivity4.class);
+                            Intent intent = new Intent(OwnerLogin.this, MainActivity4.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(ownerLogin.this, "No such landlord exists in the database.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OwnerLogin.this, "No such landlord exists in the database.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(ownerLogin.this, "Failed to retrieve landlord data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(OwnerLogin.this, "Failed to retrieve landlord data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create an intent to start MainActivity3
-                Intent intent = new Intent(ownerLogin.this, MainActivity4.class);
+                Intent intent = new Intent(OwnerLogin.this, MainActivity4.class);
                 startActivity(intent);
             }
         });
@@ -134,7 +134,7 @@ public class ownerLogin extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ownerLogin.this, ownerCreateAcc.class);
+                Intent intent = new Intent(OwnerLogin.this, OwnerCreateAcc.class);
                 startActivity(intent);
             }
         });
@@ -142,7 +142,7 @@ public class ownerLogin extends AppCompatActivity {
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ownerLogin.this, ownerfgp.class);
+                Intent intent = new Intent(OwnerLogin.this, Ownerfgp.class);
                 startActivity(intent);
             }
         });

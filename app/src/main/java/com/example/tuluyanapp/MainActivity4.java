@@ -9,11 +9,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.tuluyanapp.fragments.ownerActivitypage;
-import com.example.tuluyanapp.fragments.ownerHomepage;
-import com.example.tuluyanapp.fragments.ownerManagepostpage;
-import com.example.tuluyanapp.fragments.ownerPostpage;
-import com.example.tuluyanapp.fragments.ownerProfilepage;
+import com.example.tuluyanapp.fragments.OwnerActivitypage;
+import com.example.tuluyanapp.fragments.OwnerHomepage;
+import com.example.tuluyanapp.fragments.OwnerManagepostpage;
+import com.example.tuluyanapp.fragments.OwnerPostpage;
+import com.example.tuluyanapp.fragments.OwnerProfilepage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -34,7 +34,7 @@ public class MainActivity4 extends AppCompatActivity {
         btmnav1.setSelectedItemId(R.id.Tnav_home);  // Corrected method name
         btmnav1.setOnItemSelectedListener(navListener1);  // Corrected method name
 
-        Fragment selectedFragment1 = new ownerHomepage();
+        Fragment selectedFragment1 = new OwnerHomepage();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, selectedFragment1).commit();
     }
 
@@ -43,15 +43,15 @@ public class MainActivity4 extends AppCompatActivity {
         Fragment selected1 = null;
 
         if (itemId1 == R.id.Tnav_home) {
-            selected1 = new ownerHomepage();
+            selected1 = new OwnerHomepage();
         } else if (itemId1 == R.id.Tnav_post) {
-            selected1 = new ownerPostpage();
+            selected1 = new OwnerPostpage();
         } else if (itemId1 == R.id.Tnav_manage) {
-            selected1 = new ownerManagepostpage();
+            selected1 = new OwnerManagepostpage();
         } else if (itemId1 == R.id.Tnav_activity) {
-            selected1 = new ownerActivitypage();
+            selected1 = new OwnerActivitypage();
         } else if (itemId1 == R.id.Tnav_profile) {
-            selected1 = new ownerProfilepage();
+            selected1 = new OwnerProfilepage();
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, selected1).commit();

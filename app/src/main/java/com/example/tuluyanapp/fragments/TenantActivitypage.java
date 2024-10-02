@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tuluyanapp.R;
-import com.example.tuluyanapp.chatfunction;
+import com.example.tuluyanapp.Chatfunction;
 
-public class tenantactivitypage extends Fragment {
+public class TenantActivitypage extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class tenantactivitypage extends Fragment {
 
         ImageView messageBtn = view.findViewById(R.id.messageBtn2);
         messageBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), chatfunction.class);
+            Intent intent = new Intent(getActivity(), Chatfunction.class);
             startActivity(intent);
         });
 

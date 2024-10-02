@@ -15,7 +15,7 @@
         android:theme="@style/Theme.TuluyanApp"
         tools:targetApi="31">
         <activity
-            android:name=".chatfunction"
+            android:name=".Chatfunction"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".help"
+            android:name=".TenantHelp"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -44,27 +44,27 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ownerLogin"
+            android:name=".OwnerLogin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userLogin"
+            android:name=".UserLogin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userCreateAcc"
+            android:name=".UserCreateAcc"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ownerCreateAcc"
+            android:name=".OwnerCreateAcc"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ownerfgp"
+            android:name=".Ownerfgp"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userfgp"
+            android:name=".Userfgp"
             android:exported="false"
             android:screenOrientation="portrait" />
     </application>

@@ -1,6 +1,5 @@
 package com.example.tuluyanapp.fragments;
 
-import android.content.Intent; // Import for Intent
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,13 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.tuluyanapp.R;
-import com.example.tuluyanapp.chatfunction;
 
-public class ownerActivitypage extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link OwnerManagepostpage#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class OwnerManagepostpage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,8 +26,7 @@ public class ownerActivitypage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-    public ownerActivitypage() {
+    public OwnerManagepostpage() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class ownerActivitypage extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment tenantActivitypage.
+     * @return A new instance of fragment tenantManagepostpage.
      */
     // TODO: Rename and change types and number of parameters
-    public static ownerActivitypage newInstance(String param1, String param2) {
-        ownerActivitypage fragment = new ownerActivitypage();
+    public static OwnerManagepostpage newInstance(String param1, String param2) {
+        OwnerManagepostpage fragment = new OwnerManagepostpage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,16 +57,10 @@ public class ownerActivitypage extends Fragment {
         }
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_owner_activitypage, container, false);
-
-        ImageView messageBtn = view.findViewById(R.id.messageBtn);
-        messageBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), chatfunction.class);
-            startActivity(intent);
-        });
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_tenant_managepostpage, container, false);
     }
 }
