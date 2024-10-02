@@ -80,7 +80,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextMobile"
+        android:id="@+id/tMobilenum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_rounded"
@@ -112,7 +112,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextEmail"
+        android:id="@+id/tEmailAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_rounded"
@@ -147,7 +147,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextAddress"
+        android:id="@+id/tAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_rounded"
@@ -181,7 +181,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextName"
+        android:id="@+id/tFirstName"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_rounded"
@@ -215,7 +215,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextLast"
+        android:id="@+id/tSurname"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_rounded"
@@ -261,7 +261,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginbtn"
+            android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -274,7 +274,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
 
-            android:id="@+id/button7"
+            android:id="@+id/saveTenantProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

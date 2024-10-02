@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/messageBtn"
+            android:id="@+id/messageBtn2"
             android:layout_width="55dp"
             android:layout_height="54dp"
             android:layout_marginTop="22dp"
