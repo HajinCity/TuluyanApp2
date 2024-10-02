@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class userLogin extends AppCompatActivity {
+public class UserLogin extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
@@ -60,13 +60,13 @@ public class userLogin extends AppCompatActivity {
 
             // Authenticate user
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(userLogin.this, task -> {
+                    .addOnCompleteListener(UserLogin.this, task -> {
                         progressBar.setVisibility(View.GONE); // Hide progress bar after login completes
                         if (task.isSuccessful()) {
                             // Check if the user exists in tenantcollection
                             checkTenantInFirestore();
                         } else {
-                            Toast.makeText(userLogin.this, "Authentication failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserLogin.this, "Authentication failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
         });
@@ -74,14 +74,14 @@ public class userLogin extends AppCompatActivity {
         // Set up "Create Account" link click listener
         TextView textViewCreateAccount = findViewById(R.id.textView11);
         textViewCreateAccount.setOnClickListener(v -> {
-            Intent intent = new Intent(userLogin.this, userCreateAcc.class);
+            Intent intent = new Intent(UserLogin.this, UserCreateAcc.class);
             startActivity(intent);
         });
 
         // Set up "Forgot Password" link click listener
         TextView textViewForgotPassword = findViewById(R.id.textView10);
         textViewForgotPassword.setOnClickListener(v -> {
-            Intent intent = new Intent(userLogin.this, userfgp.class);
+            Intent intent = new Intent(UserLogin.this, Userfgp.class);
             startActivity(intent);
         });
     }
@@ -97,17 +97,17 @@ public class userLogin extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null && document.exists()) {
-                                Toast.makeText(userLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UserLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
                                 // Redirect to another activity (e.g., main dashboard)
-                                startActivity(new Intent(userLogin.this, MainActivity3.class));
+                                startActivity(new Intent(UserLogin.this, MainActivity3.class));
                                 finish();
                             } else {
-                                Toast.makeText(userLogin.this, "No tenant data found.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserLogin.this, "No tenant data found.", Toast.LENGTH_LONG).show();
                                 // Optionally, log out the user
                                 mAuth.signOut();
                             }
                         } else {
-                            Toast.makeText(userLogin.this, "Failed to check tenant data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserLogin.this, "Failed to check tenant data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".fragments.ownerManagepostpage">
+    tools:context=".fragments.OwnerManagepostpage">
 
     <!-- TODO: Update blank fragment layout -->
 

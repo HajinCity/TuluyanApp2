@@ -29,7 +29,7 @@ public class MainActivity2 extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent userLoginIntent = new Intent(MainActivity2.this, userLogin.class);
+                Intent userLoginIntent = new Intent(MainActivity2.this, UserLogin.class);
                 startActivity(userLoginIntent);
             }
         });
@@ -37,7 +37,7 @@ public class MainActivity2 extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ownerLoginIntent = new Intent(MainActivity2.this, ownerLogin.class);
+                Intent ownerLoginIntent = new Intent(MainActivity2.this, OwnerLogin.class);
                 startActivity(ownerLoginIntent);
             }
         });

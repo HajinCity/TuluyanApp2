@@ -12,10 +12,10 @@ import com.example.tuluyanapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ownerManagepostpage#newInstance} factory method to
+ * Use the {@link OwnerManagepostpage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ownerManagepostpage extends Fragment {
+public class OwnerManagepostpage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class ownerManagepostpage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ownerManagepostpage() {
+    public OwnerManagepostpage() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class ownerManagepostpage extends Fragment {
      * @return A new instance of fragment tenantManagepostpage.
      */
     // TODO: Rename and change types and number of parameters
-    public static ownerManagepostpage newInstance(String param1, String param2) {
-        ownerManagepostpage fragment = new ownerManagepostpage();
+    public static OwnerManagepostpage newInstance(String param1, String param2) {
+        OwnerManagepostpage fragment = new OwnerManagepostpage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
