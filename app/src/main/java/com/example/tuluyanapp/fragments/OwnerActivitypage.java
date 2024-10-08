@@ -60,7 +60,7 @@ public class OwnerActivitypage extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_owner_activitypage, container, false);
 
-        ImageView messageBtn = view.findViewById(R.id.messageBtn);
+        ImageView messageBtn = view.findViewById(R.id.messageBtn2);
         messageBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Chatfunction.class);
             startActivity(intent);

@@ -15,7 +15,7 @@
             android:layout_margin="20dp"
             android:padding="12dp"
             android:src="@drawable/back"
-            android:background="transparent"
+            android:background="@color/transparent"
             android:contentDescription="@string/app1" />
 
         <TextView

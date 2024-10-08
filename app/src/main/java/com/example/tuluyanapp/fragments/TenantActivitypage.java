@@ -23,14 +23,19 @@ public class TenantActivitypage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_activitypage, container, false);
+        return inflater.inflate(R.layout.activity_activitypage, container, false);
+    }
 
-        ImageView messageBtn = view.findViewById(R.id.messageBtn2);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageView messageBtn = view.findViewById(R.id.messageBtn3);
         messageBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Chatfunction.class);
-            startActivity(intent);
+            if (getActivity() != null) {
+                Intent intent = new Intent(getActivity(), Chatfunction.class);
+                startActivity(intent);
+            }
         });
-
-        return view;
     }
 }

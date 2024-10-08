@@ -7,5 +7,6 @@
     <color name="black1">#292D32</color>
     <color name="lightgray">#515151</color>
     <color name="light">#9F9F9F</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
