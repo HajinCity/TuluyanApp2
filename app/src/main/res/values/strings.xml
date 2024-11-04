@@ -70,17 +70,41 @@
     <string name="app69">Add new</string>
     <string name="app70">Listing</string>
     <string name="app71">title</string>
-    <string name="app72">Save</string>
-    <string name="app73">Save</string>
-    <string name="app74">Save</string>
-    <string name="app75">Save</string>
-    <string name="app76">Save</string>
-    <string name="app77">Save</string>
-    <string name="app78">Save</string>
-    <string name="app79">Save</string>
+    <string name="app72">Add Images</string>
+    <string name="app73">Listing Information</string>
+    <string name="app74">Title</string>
+    <string name="app75">Price</string>
+    <string name="app76">Payment</string>
+    <string name="app77">Address</string>
+    <string name="app78">Description</string>
+    <string name="app79">Create</string>
     <string name="app80">Save</string>
-    <string name="app81">Save</string>
-    <string name="app82">Save</string>
+    <string name="app81">Your Source for Quick and Realiable Assistance</string>
+    <string name="app82">FAQs</string>
+    <string name="app83">How to Rent?</string>
+    <string name="app84">Can I filter boarding houses based on rental price range?</string>
+    <string name="app85">How often is the boarding house listing updated?</string>
+    <string name="app86">Rent</string>
+    <string name="app87">Personal Details</string>
+    <string name="app88">Rental Details</string>
+    <string name="app89">Room Preference</string>
+    <string name="app90">Single Room</string>
+    <string name="app91">Shared Room</string>
+    <string name="app92">Start Date</string>
+    <string name="app93">Payment Method</string>
+    <string name="app94">In-Person</string>
+    <string name="app95">Gcash</string>
+    <string name="app96">Paypal</string>
+    <string name="app97">Settings</string>
+    <string name="app98">Privacy Settings</string>
+    <string name="app99">Change Password</string>
+    <string name="app100">Enabled Dark Mode</string>
+    <string name="app101">Enabled Push Notifications</string>
+
+    <string-array name="duration_array">
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
 
 
 

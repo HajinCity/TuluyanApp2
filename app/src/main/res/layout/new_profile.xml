@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,89 +8,98 @@
     tools:context=".fragments.profilepage">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+
+    <FrameLayout
+        android:id="@+id/frameLayoutContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/bookmark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints">
+        tools:ignore="InvalidId">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/circularImageView"
-            android:layout_width="129dp"
-            android:layout_height="113dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="4dp"
-            android:src="@drawable/luffy"
-            app:circularflow_defaultRadius="100dp" />
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
+            android:src="@drawable/blue_bg"
+            android:scaleType="centerInside" />
 
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="match_parent"
+            android:layout_height="119dp"
+            android:src="@drawable/ellipse"
+            android:layout_marginTop="55dp"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@string/app50"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/bookmark">
 
-    </LinearLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/circularImageView"
+                android:layout_width="129dp"
+                android:layout_height="95dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/luffy"
+                app:circularflow_defaultRadius="100dp" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/app50"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
         android:background="@drawable/edit_rounded"
         android:drawableStart="@drawable/edit"
-        android:drawablePadding="-20dp"
-        android:ems="10"
+        android:ems="8"
         android:hint="@string/app49"
-        android:minHeight="48dp"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@id/frameLayoutContainer"/>
+
 
     <Button
-        android:id="@+id/settings"
+        android:id="@+id/bookmark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="285dp"
+        android:layout_marginEnd="170dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/setting"
-        android:hint="@string/app47"
+        android:drawableLeft="@drawable/bookmark"
+        android:hint="@string/app44"
         android:minHeight="48dp"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/help"
-        tools:ignore="MissingConstraints" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/applications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="160dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/document"
         android:hint="@string/app45"
@@ -99,18 +108,15 @@
         android:textColorHint="@color/black"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookmark"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@id/bookmark"/>
 
     <Button
         android:id="@+id/help"
-        android:layout_width="match_parent"
+        android:layout_width="161dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/applications"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="170dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/question"
         android:hint="@string/app46"
@@ -118,40 +124,30 @@
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/applications"
-        tools:ignore="MissingConstraints" />
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/bookmark"
+        android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="195dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/bookmark"
-        android:hint="@string/app44"
+        android:drawableLeft="@drawable/setting"
+        android:hint="@string/app47"
         android:minHeight="48dp"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@id/help"/>
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="205dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/logout"
         android:hint="@string/app48"
@@ -160,11 +156,7 @@
         android:textColorHint="@color/black"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@id/settings"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
