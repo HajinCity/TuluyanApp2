@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="match_parent"
+        android:layout_height="386dp"
+        app:srcCompat="@drawable/rectangle" />
+
+    <TextView
+        android:id="@+id/Rent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app86"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app87"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/Rent"
+        />
+
+    <TextView
+        android:id="@+id/fname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app54"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/details"
+        />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="166dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/fname"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/gray_bg"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="20dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black" />
+
+    <TextView
+        android:id="@+id/lname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/details"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/app55"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editlname"
+        android:layout_width="166dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/lname"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/gray_bg"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="20dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black" />
+
+    <TextView
+        android:id="@+id/mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app56"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/editTextText"
+        />
+
+    <EditText
+        android:id="@+id/mobileedit"
+        android:layout_width="166dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/mobile"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/gray_bg"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="20dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black" />
+
+    <TextView
+        android:id="@+id/emailaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app57"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="230dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/editlname"
+        />
+
+    <EditText
+        android:id="@+id/emailedit"
+        android:layout_width="166dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/emailaddress"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/gray_bg"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="20dp"
+        android:padding="15dp"
+        android:textColorHint="@color/black" />
+
+    <TextView
+        android:id="@+id/rentdetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app88"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/mobileedit"
+        />
+
+    <TextView
+        android:id="@+id/roompreference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app89"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/rentdetails"
+        />
+
+    <RadioButton
+        android:id="@+id/singleradiobtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app90"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_below="@id/roompreference"/>
+
+    <RadioButton
+        android:id="@+id/shareradiobtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app91"
+        android:layout_marginStart="190dp"
+        android:layout_marginEnd="50dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_below="@id/roompreference"/>
+
+    <TextView
+        android:id="@+id/startdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app92"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="70dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/singleradiobtn"
+        />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09/28/2024"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/light"
+            android:textColor="@android:color/black"
+            android:padding="10dp"
+            android:layout_below="@id/startdate"/>
+
+        <TextView
+            android:id="@+id/paymentmethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app93"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="70dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/dateTextView"
+            />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Inperson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentmethod"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/app94"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Gcash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentmethod"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="130dp"
+        android:text="@string/app95"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Paypal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentmethod"
+        android:layout_marginStart="225dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="225dp"
+        android:text="@string/app96"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="166dp"
+        android:layout_height="58dp"
+        android:layout_below="@id/Inperson"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/light"
+        android:text="@string/app67"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:cornerRadius="10dp" />
+
+    <Button
+        android:id="@+id/rentbtn"
+        android:layout_width="166dp"
+        android:layout_height="58dp"
+        android:layout_below="@id/Paypal"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/app86"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:cornerRadius="10dp" />
+
+</RelativeLayout>
