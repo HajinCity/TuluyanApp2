@@ -1,289 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/white">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app52"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.319"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016"
-        tools:ignore="MissingConstraints" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circularImageView"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/luffy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.074"
-        tools:ignore="MissingClass,MissingConstraints" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/Editimage"
-        android:layout_width="39dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/edit"
-        app:layout_constraintBottom_toBottomOf="@+id/circularImageView"
-        app:layout_constraintEnd_toEndOf="@+id/circularImageView"
-        app:layout_constraintStart_toStartOf="@+id/circularImageView"
-        tools:ignore="MissingClass,MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app53"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circularImageView"
-        app:layout_constraintVertical_bias="0.016"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app61"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.447"
-        tools:ignore="MissingConstraints" />
-
-
-    <EditText
-        android:id="@+id/editTextTextMobile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_rounded"
-        android:hint="@string/app62"
-        android:minHeight="48dp"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app63"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/editTextTextEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_rounded"
-        android:hint="@string/app64"
-        android:minHeight="48dp"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.664"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app65"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737"
-        tools:ignore="MissingConstraints" />
-
-
-    <EditText
-        android:id="@+id/editTextTextAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_rounded"
-        android:hint="@string/app66"
-        android:minHeight="48dp"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.117"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.807"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app54"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/editTextTextName"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_rounded"
-        android:hint="@string/app59"
-        android:minHeight="48dp"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365"
-        tools:ignore="LabelFor,MissingConstraints" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:text="@string/app55"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.799"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/editTextTextLast"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_rounded"
-        android:hint="@string/app60"
-        android:minHeight="48dp"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365"
-        tools:ignore="MissingConstraints" />
-
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/Backbtn"
-        android:layout_width="56dp"
-        android:layout_height="45dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.015"
-        tools:ignore="MissingClass,MissingConstraints" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="56dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginbtn"
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/tEditProfileBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            android:text="@string/app67"
+            android:layout_margin="20dp"
+            android:padding="12dp"
+            android:src="@drawable/back"
+            android:background="@color/transparent"
+            android:contentDescription="@string/app1" />
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app52"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <!-- Circular ImageView -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circularImageView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/luffy"
+            android:layout_below="@id/textViewTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
 
-            android:id="@+id/button7"
+        <!-- Edit Image for Profile Picture -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/Editimage"
+            android:layout_width="39dp"
+            android:layout_height="30dp"
+            android:src="@drawable/edit"
+            android:layout_below="@id/circularImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+
+        <!-- Other Labels and Input Fields -->
+        <TextView
+            android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/blue_bg"
-            android:text="@string/app68"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:text="@string/app53"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_below="@id/Editimage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewOther4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app54"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/textView26"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/tFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app59"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther4"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/textViewOther5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app72"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tFirstName"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="16dp" />
+
+        <!-- Middle Name Input -->
+        <EditText
+            android:id="@+id/tMiddleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app59"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther5"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Last Name (Surname) -->
+        <TextView
+            android:id="@+id/textViewOther6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app55"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tMiddleName"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="16dp" />
+
+        <!-- Surname Input -->
+        <EditText
+            android:id="@+id/tSurName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app59"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther6"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Address Input -->
+        <TextView
+            android:id="@+id/textViewOther7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app58"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tSurName"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="16dp" />
+
+        <EditText
+            android:id="@+id/tAddress"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app66"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther7"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Contact Info Section -->
+        <TextView
+            android:id="@+id/textViewOther8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app61"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tAddress"
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="16dp" />
+
+        <EditText
+            android:id="@+id/tContactNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app56"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther8"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Email Section -->
+        <TextView
+            android:id="@+id/textViewOther9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app57"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tContactNo"
+            android:layout_marginTop="13dp"
+            android:layout_marginStart="16dp" />
+
+        <EditText
+            android:id="@+id/tEmailAddress"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app64"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/textViewOther9"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Profile Age and Birth Date -->
+        <TextView
+            android:id="@+id/textViewOther10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app73"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tEmailAddress"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="52dp"
+            android:layout_toStartOf="@id/textView26" />
+
+        <TextView
+            android:id="@+id/textViewOther11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app74"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tEmailAddress"
+            android:layout_marginStart="-88dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="-14dp"
+            android:layout_toEndOf="@id/textView26" />
+
+        <!-- Profile Age and Birth Date Input Fields -->
+        <EditText
+            android:id="@+id/tProfileAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewOther10"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app73"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/tBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewOther11"
+            android:layout_toEndOf="@id/tProfileAge"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/edit_rounded"
+            android:hint="@string/app74"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColorHint="@color/black"
+            android:inputType="date"
+            android:textColor="@color/black"
+            android:layout_marginBottom="100dp"/>
+
+        <!-- Button Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tBirthDate"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center">
+
+            <!-- Cancel Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancelBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_background"
+                android:text="@string/app67"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <!-- Save Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveTenantProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/blue_bg"
+                android:text="@string/app68"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
