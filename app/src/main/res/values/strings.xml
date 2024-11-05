@@ -100,19 +100,6 @@
     <string name="app99">Change Password</string>
     <string name="app100">Enabled Dark Mode</string>
     <string name="app101">Enabled Push Notifications</string>
-    <string name="app102">Terms and Conditions</string>
-    <string name="app103">Logout</string>
-    <string name="app104">Enter New Password</string>
-    <string name="app105">Confirm Password</string>
-    <string name="app106">Change Password</string>
-    <string name="app107">Submit</string>
-    <string name="app108">Carlito Mae Tabeacon</string>
-    <string name="app109">Owner</string>
-    <string name="app110">Request</string>
-    <string name="app111">See All</string>
-    <string name="app112">See All</string>
-
-
 
     <string-array name="duration_array">
         <item>Monthly</item>
