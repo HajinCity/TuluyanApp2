@@ -24,7 +24,7 @@ public class ownerLogin extends AppCompatActivity {
             return insets;
         });
 
-        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.LLbutton3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create an intent to start MainActivity3
@@ -33,7 +33,7 @@ public class ownerLogin extends AppCompatActivity {
             }
         });
 
-        TextView textView = findViewById(R.id.textView8);
+        TextView textView = findViewById(R.id.LLtextView8);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public class ownerLogin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        TextView textView1 = findViewById(R.id.textView7);
+        TextView textView1 = findViewById(R.id.LLtextView7);
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
