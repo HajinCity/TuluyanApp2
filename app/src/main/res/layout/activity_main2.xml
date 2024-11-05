@@ -65,7 +65,7 @@
             android:layout_height="79dp"
             app:cornerRadius="10dp"
             android:layout_marginTop="100dp"
-            android:backgroundTint="@color/light"
+            android:backgroundTint="@color/white"
             android:text="@string/app4"
             android:textColor="@color/black"
             android:textStyle="bold"

@@ -4,22 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <TextView
         android:id="@+id/Rent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app97"
-        android:textColorHint="@color/black"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
-        />
-
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/privacy"
@@ -35,7 +30,6 @@
         android:padding="22dp"
         android:text="@string/app98"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="start|center_vertical"
@@ -55,24 +49,22 @@
         android:padding="22dp"
         android:text="@string/app99"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="start|center_vertical"
         android:drawablePadding="16dp"
         android:layout_below="@id/privacy"/>
 
     <LinearLayout
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:orientation="vertical"
         android:padding="16dp"
-        android:layout_marginTop="280dp"
-        android:background="@drawable/button_border">
-
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_border"
+        android:layout_below="@id/changepass">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,12 +92,10 @@
                 android:minHeight="48dp" />
         </LinearLayout>
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@android:color/darker_gray" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,12 +115,14 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <!-- Changed ID for the second Switch -->
             <Switch
-                android:id="@+id/switch_dark_mode"
+                android:id="@+id/switch_notif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
                 android:minHeight="48dp" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

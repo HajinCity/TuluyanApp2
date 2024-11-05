@@ -26,7 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
         });
 
         // Set up button click listeners
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button39).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent userLoginIntent = new Intent(MainActivity2.this, userLogin.class);
@@ -34,7 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button40).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent ownerLoginIntent = new Intent(MainActivity2.this, ownerLogin.class);
