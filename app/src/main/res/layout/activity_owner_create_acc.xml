@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/main"
-        android:background="@color/white"
+
+
+    <EditText
+        android:id="@+id/editTextTextConfrim"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_rounded"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="@string/app30"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/editTextTextPassword" />
 
-        <EditText
-            android:id="@+id/LLeditTextTextConfrim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/border_rounded"
-            android:drawableStart="@drawable/password"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="15dp"
-            android:ems="10"
-            android:hint="@string/app30"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/black"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColorHint="@color/black"
-            android:textStyle="bold"
-            android:layout_below="@id/LLeditTextTextPassword" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/rental3" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/rental3" />
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"
+        android:lineSpacingExtra="6dp"
+        android:text="@string/privacy"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_below="@id/editTextTextConfrim" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="266dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="20dp"
-            android:lineSpacingExtra="6dp"
-            android:text="@string/privacy"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_below="@id/LLeditTextTextConfrim" />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text=""
+        android:layout_below="@id/editTextTextConfrim" />
 
-        <CheckBox
-            android:id="@+id/LLcheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_below="@id/LLeditTextTextConfrim" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/LLloginbtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/blue_bg"
-            android:layout_centerHorizontal="true"
-            android:text="@string/app15"
-            android:textColor="@color/white"
-            android:textSize="23sp"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_below="@id/LLbutton3" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_bg"
+        android:text="@string/app15"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/button3"/>
 
-        <Button
-            android:id="@+id/LLbutton3"
-            android:layout_centerHorizontal="true"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView8"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:text="@string/app14"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/app14"
+        android:textColor="@color/black"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="17sp"
+        android:layout_below="@id/editTextTextConfrim" />
 
-        <TextView
-            android:id="@+id/LLtextView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/app9"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_below="@id/imageView3" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/app9"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_below="@id/imageView3"
+        android:layout_marginStart="90dp"
+        />
 
-        <EditText
-            android:id="@+id/LLeditTextTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/border_rounded"
-            android:drawableStart="@drawable/password"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="@string/app7"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColorHint="@color/black"
-            android:textStyle="bold"
-            android:layout_below="@id/LLeditTextTextEmail" />
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_rounded"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="@string/app7"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/editTextTextEmail" />
 
-        <EditText
-            android:id="@+id/LLeditTextTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/border_rounded"
-            android:drawableStart="@drawable/email"
-            android:layout_marginTop="15dp"
-            android:drawablePadding="10dp"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:hint="@string/app32"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColorHint="@color/black"
-            android:textStyle="bold"
-            android:layout_below="@id/LLeditTextTextName" />
+    <EditText
+        android:id="@+id/editTextTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_rounded"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="@string/app32"
+        android:layout_marginTop="15dp"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/editTextTextEmail1" />
 
-        <EditText
-            android:id="@+id/LLeditTextTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/border_rounded"
-            android:drawableStart="@drawable/user"
-            android:layout_marginTop="35dp"
-            android:textColor="@color/black"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="@string/app31"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColorHint="@color/black"
-            android:textStyle="bold"
-            android:inputType="text"
-            android:layout_below="@id/LLtextView6" />
-    </RelativeLayout>
+    <EditText
+        android:id="@+id/editTextTextEmail1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/border_rounded"
+        android:drawableStart="@drawable/user"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="@string/app31"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@id/textView6"
+        />
 
-</ScrollView>
+</RelativeLayout>
