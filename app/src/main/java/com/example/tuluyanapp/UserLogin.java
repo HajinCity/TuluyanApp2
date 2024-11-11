@@ -9,11 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,10 +60,12 @@ public class UserLogin extends AppCompatActivity {
                     .addOnCompleteListener(UserLogin.this, task -> {
                         progressBar.setVisibility(View.GONE); // Hide progress bar after login completes
                         if (task.isSuccessful()) {
-                            // Check if the user exists in tenantcollection
+                            // Check if the user exists in tenantCollection
                             checkTenantInFirestore();
                         } else {
-                            Toast.makeText(UserLogin.this, "Authentication failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserLogin.this, "Authentication failed: " +
+                                            Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
         });
@@ -74,7 +73,7 @@ public class UserLogin extends AppCompatActivity {
         // Set up "Create Account" link click listener
         TextView textViewCreateAccount = findViewById(R.id.textView11);
         textViewCreateAccount.setOnClickListener(v -> {
-            Intent intent = new Intent(UserLogin.this, UserCreateAcc.class);
+            Intent intent = new Intent(UserLogin.this, UserCreateAccActivity.class);
             startActivity(intent);
         });
 
@@ -89,26 +88,25 @@ public class UserLogin extends AppCompatActivity {
     private void checkTenantInFirestore() {
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        db.collection("tenantcollection").document(userId)
+        db.collection("TenantCollection").document(userId)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null && document.exists()) {
-                                Toast.makeText(UserLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
-                                // Redirect to another activity (e.g., main dashboard)
-                                startActivity(new Intent(UserLogin.this, MainActivity3.class));
-                                finish();
-                            } else {
-                                Toast.makeText(UserLogin.this, "No tenant data found.", Toast.LENGTH_LONG).show();
-                                // Optionally, log out the user
-                                mAuth.signOut();
-                            }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            Toast.makeText(UserLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                            // Redirect to another activity (e.g., main dashboard)
+                            startActivity(new Intent(UserLogin.this, MainActivity3.class));
+                            finish();
                         } else {
-                            Toast.makeText(UserLogin.this, "Failed to check tenant data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserLogin.this, "No tenant data found.", Toast.LENGTH_LONG).show();
+                            // Optionally, log out the user
+                            mAuth.signOut();
                         }
+                    } else {
+                        Toast.makeText(UserLogin.this, "Failed to check tenant data: " +
+                                        Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }

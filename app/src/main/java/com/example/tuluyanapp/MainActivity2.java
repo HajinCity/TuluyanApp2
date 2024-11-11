@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tuluyanapp.fragments.TenantBookmark;
+
 public class MainActivity2 extends AppCompatActivity {
 
     @Override
@@ -37,7 +39,7 @@ public class MainActivity2 extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ownerLoginIntent = new Intent(MainActivity2.this, OwnerLogin.class);
+                Intent ownerLoginIntent = new Intent(MainActivity2.this, TenantBookmark.OwnerLogin.class);
                 startActivity(ownerLoginIntent);
             }
         });
