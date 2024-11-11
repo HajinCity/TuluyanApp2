@@ -1,9 +1,11 @@
-package com.example.tuluyanapp;
+package com.example.tuluyanapp.fragments;
 
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.tuluyanapp.R;
 
 public class TenantHelp extends AppCompatActivity {
 

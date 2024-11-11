@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tuluyanapp.fragments.TenantBookmark;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserCreateAcc extends AppCompatActivity {
+public class OwnerCreateAccActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextEmail, editTextPassword, editTextConfirmPassword;
     private CheckBox checkBoxPrivacy;
@@ -30,7 +31,7 @@ public class UserCreateAcc extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_create_acc);
+        setContentView(R.layout.activity_owner_create_acc);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -49,7 +50,6 @@ public class UserCreateAcc extends AppCompatActivity {
             String password = editTextPassword.getText().toString().trim();
             String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-            // Validate the inputs
             if (TextUtils.isEmpty(name)) {
                 editTextName.setError("Name is required.");
                 return;
@@ -71,56 +71,50 @@ public class UserCreateAcc extends AppCompatActivity {
             }
 
             if (!checkBoxPrivacy.isChecked()) {
-                Toast.makeText(UserCreateAcc.this, "Please accept the privacy policy.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please accept the privacy policy.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             progressBar.setVisibility(View.VISIBLE);
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(UserCreateAcc.this, task -> {
+                    .addOnCompleteListener(this, task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-
-                            storeUserData(name, email);
-
-                            Toast.makeText(UserCreateAcc.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(UserCreateAcc.this, UserLogin.class));
+                            storeOwnerData(name, email, password);
+                            Toast.makeText(this, "Account created successfully.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(this, TenantBookmark.OwnerLogin.class));
                             finish();
                         } else {
-                            Toast.makeText(UserCreateAcc.this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
         });
     }
 
-    private void storeUserData(String name, String email) {
+    private void storeOwnerData(String name, String email, String password) {
+        OwnerCreateAccountClass owner = new OwnerCreateAccountClass();
 
-        Map<String, Object> tenantData = new HashMap<>();
-        tenantData.put("First-Name", name);
-        tenantData.put("useraccount", email);
-        tenantData.put("Address", "");
-        tenantData.put("Age", "");
-        tenantData.put("Birthdate", "");
-        tenantData.put("Contact-No", "");
-        tenantData.put("Last-Name", "");
-        tenantData.put("Middle-Name", "");
-        tenantData.put("email", email);
-        tenantData.put("profilepic", "");
-        tenantData.put("tenant", mAuth.getCurrentUser().getUid()); // Use UID directly
+        if (mAuth.getCurrentUser() != null) {
+            String uid = mAuth.getCurrentUser().getUid();
+            owner.setFirstName(name);
+            owner.setEmail(email);
+            owner.setPassword(password);
+            owner.setLandlordUID(uid);
 
-        // Store in Firestore under the collection "tenantcollection"
-        db.collection("tenantcollection")
-                .document(mAuth.getCurrentUser().getUid())  // Use the UID as the document ID
-                .set(tenantData)
-                .addOnSuccessListener(aVoid -> {
-                    // Success message or any additional actions
-                    Toast.makeText(UserCreateAcc.this, "User data stored successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    // Failure message
-                    Toast.makeText(UserCreateAcc.this, "Error storing user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+            Map<String, Object> ownerData = new HashMap<>();
+            ownerData.put("FirstName", owner.getFirstName());
+            ownerData.put("UserAccount", owner.getEmail());
+            ownerData.put("Password", owner.getPassword());
+            ownerData.put("LandlordUID", owner.getLandlordUID());
+
+            db.collection("LandlordCollection")
+                    .document(uid)
+                    .set(ownerData)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(this, "Owner data stored successfully", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Error storing owner data: " + e.getMessage(), Toast.LENGTH_LONG).show());
+        } else {
+            Toast.makeText(this, "User authentication error.", Toast.LENGTH_LONG).show();
+        }
     }
 }
