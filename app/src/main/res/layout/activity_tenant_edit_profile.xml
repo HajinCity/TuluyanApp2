@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,19 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".fragments.TenantEditProfile">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@color/white">
 
         <ImageButton
             android:id="@+id/tEditProfileBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_gravity="start"
             android:padding="12dp"
             android:src="@drawable/back"
-            android:background="@color/transparent"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="15dp"
             android:contentDescription="@string/app1" />
 
         <TextView
@@ -30,16 +32,15 @@
             android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circularImageView"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/luffy"
-            android:layout_below="@id/textViewTitle"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -47,8 +48,7 @@
             android:layout_width="39dp"
             android:layout_height="30dp"
             android:src="@drawable/edit"
-            android:layout_below="@id/circularImageView"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -59,8 +59,7 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:layout_below="@id/Editimage"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp" />
 
         <TextView
@@ -71,11 +70,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/textView26"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_alignParentStart="true" />
+            android:layout_marginTop="8dp" />
 
         <EditText
             android:id="@+id/tFirstName"
@@ -88,10 +83,7 @@
             android:padding="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther4"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/textViewOther5"
@@ -101,25 +93,21 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/tFirstName"
-            android:layout_marginTop="9dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginTop="9dp" />
 
         <EditText
             android:id="@+id/tMiddleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="textPersonName|textCapCharacters"
+            android:maxLength="1"
             android:textColor="@color/black"
             android:background="@drawable/edit_rounded"
             android:hint="@string/app59"
             android:minHeight="48dp"
             android:padding="15dp"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther5"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/textViewOther6"
@@ -129,9 +117,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/tMiddleName"
-            android:layout_marginTop="9dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginTop="9dp" />
 
         <EditText
             android:id="@+id/tSurName"
@@ -144,10 +130,7 @@
             android:minHeight="48dp"
             android:padding="15dp"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther6"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/textViewOther7"
@@ -157,9 +140,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/tSurName"
-            android:layout_marginTop="9dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginTop="9dp" />
 
         <EditText
             android:id="@+id/tAddress"
@@ -172,10 +153,7 @@
             android:minHeight="48dp"
             android:padding="15dp"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther7"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/textViewOther8"
@@ -185,9 +163,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/tAddress"
-            android:layout_marginTop="11dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginTop="11dp" />
 
         <EditText
             android:id="@+id/tContactNo"
@@ -200,10 +176,7 @@
             android:minHeight="48dp"
             android:padding="15dp"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther8"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/textViewOther9"
@@ -213,9 +186,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@id/tContactNo"
-            android:layout_marginTop="13dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginTop="13dp" />
 
         <EditText
             android:id="@+id/tEmailAddress"
@@ -228,110 +199,80 @@
             android:minHeight="48dp"
             android:padding="15dp"
             android:textColorHint="@color/black"
-            android:layout_below="@id/textViewOther9"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/textViewOther10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tEmailAddress"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="52dp"
-            android:layout_toStartOf="@id/textView26"
-            android:text="@string/app73"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewOther11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tEmailAddress"
-            android:layout_marginStart="-88dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="-14dp"
-            android:layout_toEndOf="@id/textView26"
-            android:text="@string/app74"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/tProfileAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewOther10"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/edit_rounded"
-            android:hint="@string/app73"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
-
-        <EditText
-            android:id="@+id/tBirthDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewOther11"
-            android:layout_toEndOf="@id/tProfileAge"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/edit_rounded"
-            android:hint="@string/app74"
-            android:minHeight="48dp"
-            android:padding="15dp"
-            android:textColorHint="@color/black"
-            android:inputType="date"
-            android:textColor="@color/black"
-            android:layout_marginBottom="100dp"
-            android:focusable="false"
-            android:clickable="true" />
-
-
+        <!-- Age and Birth Date Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/tBirthDate"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="50dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/tProfileAge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_rounded"
+                android:hint="@string/app73"
+                android:inputType="number"
+                android:maxLength="2"
+                android:minHeight="48dp"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:layout_marginEnd="8dp" />
+
+
+            <EditText
+                android:id="@+id/tBirthDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_rounded"
+                android:hint="@string/app74"
+                android:minHeight="48dp"
+                android:padding="15dp"
+                android:textColorHint="@color/black"
+                android:inputType="date"
+                android:textColor="@color/black"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Cancel and Save Buttons with spacing -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="60dp"
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancelBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/button_background"
                 android:text="@string/app67"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_weight="1" />
+                android:textSize="20sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/saveTenantProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/blue_bg"
                 android:text="@string/app68"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_weight="1" />
+                android:textSize="20sp" />
         </LinearLayout>
-
-
-    </RelativeLayout>
-
+    </LinearLayout>
 </ScrollView>
