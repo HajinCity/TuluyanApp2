@@ -3,6 +3,7 @@ package com.example.tuluyanapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tuluyanapp.fragments.TenantProfileClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserCreateAcc extends AppCompatActivity {
+public class UserCreateAccActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextEmail, editTextPassword, editTextConfirmPassword;
     private CheckBox checkBoxPrivacy;
@@ -35,6 +37,7 @@ public class UserCreateAcc extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        // Initialize UI elements
         editTextName = findViewById(R.id.editTextTextName);
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
@@ -49,78 +52,89 @@ public class UserCreateAcc extends AppCompatActivity {
             String password = editTextPassword.getText().toString().trim();
             String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-            // Validate the inputs
             if (TextUtils.isEmpty(name)) {
                 editTextName.setError("Name is required.");
                 return;
             }
-
             if (TextUtils.isEmpty(email)) {
                 editTextEmail.setError("Email is required.");
                 return;
             }
-
             if (TextUtils.isEmpty(password)) {
                 editTextPassword.setError("Password is required.");
                 return;
             }
-
             if (!password.equals(confirmPassword)) {
                 editTextConfirmPassword.setError("Passwords do not match.");
                 return;
             }
-
             if (!checkBoxPrivacy.isChecked()) {
-                Toast.makeText(UserCreateAcc.this, "Please accept the privacy policy.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserCreateAccActivity.this, "Please accept the privacy policy.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             progressBar.setVisibility(View.VISIBLE);
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(UserCreateAcc.this, task -> {
+                    .addOnCompleteListener(UserCreateAccActivity.this, task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
+                            String userId = (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
 
-                            storeUserData(name, email);
+                            if (userId != null) {
+                                Log.d("UserCreateAcc", "User UID: " + userId);
 
-                            Toast.makeText(UserCreateAcc.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(UserCreateAcc.this, UserLogin.class));
-                            finish();
+                                storeUserData(name, email);
+                                Toast.makeText(UserCreateAccActivity.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(UserCreateAccActivity.this, UserLogin.class));
+                                finish();
+                            } else {
+                                Log.e("UserCreateAcc", "User authentication failed.");
+                                Toast.makeText(UserCreateAccActivity.this, "User authentication failed.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(UserCreateAcc.this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                            String errorMessage = Objects.requireNonNull(task.getException()).getMessage();
+                            Log.e("UserCreateAcc", "Registration failed: " + errorMessage);
+                            Toast.makeText(UserCreateAccActivity.this, "Registration failed: " + errorMessage, Toast.LENGTH_LONG).show();
                         }
                     });
         });
     }
 
     private void storeUserData(String name, String email) {
+        String userId = (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
 
-        Map<String, Object> tenantData = new HashMap<>();
-        tenantData.put("First-Name", name);
-        tenantData.put("useraccount", email);
-        tenantData.put("Address", "");
-        tenantData.put("Age", "");
-        tenantData.put("Birthdate", "");
-        tenantData.put("Contact-No", "");
-        tenantData.put("Last-Name", "");
-        tenantData.put("Middle-Name", "");
-        tenantData.put("email", email);
-        tenantData.put("profilepic", "");
-        tenantData.put("tenant", mAuth.getCurrentUser().getUid()); // Use UID directly
+        if (userId == null) {
+            Log.e("UserCreateAcc", "User is not authenticated.");
+            Toast.makeText(UserCreateAccActivity.this, "User authentication failed.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Store in Firestore under the collection "tenantcollection"
-        db.collection("tenantcollection")
-                .document(mAuth.getCurrentUser().getUid())  // Use the UID as the document ID
+        TenantProfileClass user = new TenantProfileClass();
+        user.setFirstName(name);
+        user.setEmail(email);
+        user.setTenantId(userId);
+
+        Map<String, Object> tenantData = createTenantDataMap(user);
+
+        db.collection("TenantCollection")
+                .document(user.getTenantId())
                 .set(tenantData)
                 .addOnSuccessListener(aVoid -> {
-                    // Success message or any additional actions
-                    Toast.makeText(UserCreateAcc.this, "User data stored successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("UserCreateAcc", "User data stored successfully.");
+                    Toast.makeText(UserCreateAccActivity.this, "User data stored successfully", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    // Failure message
-                    Toast.makeText(UserCreateAcc.this, "Error storing user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("UserCreateAcc", "Error storing user data", e);
+                    Toast.makeText(UserCreateAccActivity.this, "Error storing user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
+    }
+
+    private Map<String, Object> createTenantDataMap(TenantProfileClass user) {
+        Map<String, Object> tenantData = new HashMap<>();
+        tenantData.put("First-Name", user.getFirstName());
+        tenantData.put("userAccount", user.getEmail());
+        tenantData.put("tenant", user.getTenantId());
+        return tenantData;
     }
 }

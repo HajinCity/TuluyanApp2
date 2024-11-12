@@ -4,52 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class OwnerLogin extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db; // Firestore instance
+    private FirebaseFirestore db;  // Firestore instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_owner_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Link UI elements with code
+        // Initialize views
         editTextEmail = findViewById(R.id.editTextTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         progressBar = new ProgressBar(this);
 
-        Button loginButton = findViewById(R.id.button3);
-
-        loginButton.setOnClickListener(v -> {
+        // Set up login button click listener
+        findViewById(R.id.button3).setOnClickListener(v -> {
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
 
@@ -63,88 +53,61 @@ public class OwnerLogin extends AppCompatActivity {
                 return;
             }
 
-            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE); // Show progress bar when login starts
 
-            // Sign in user using Firebase Authentication
+            // Authenticate owner
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(OwnerLogin.this, task -> {
+                        progressBar.setVisibility(View.GONE); // Hide progress bar after login completes
                         if (task.isSuccessful()) {
-                            // Fetch user data from Firestore for the authenticated landlord
-                            fetchOwnerData();
+                            // Check if the owner exists in LandlordCollection
+                            checkOwnerInFirestore();
                         } else {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(OwnerLogin.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(OwnerLogin.this, "Authentication failed: " +
+                                            Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
         });
 
-        // Set up "Create Account" link
-        TextView textView = findViewById(R.id.textView8);
-        textView.setOnClickListener(v -> {
-            Intent intent = new Intent(OwnerLogin.this, OwnerCreateAcc.class);
+        // Set up "Create Account" link click listener
+        TextView textViewCreateAccount = findViewById(R.id.textView8);
+        textViewCreateAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(OwnerLogin.this, OwnerCreateAccActivity.class);
             startActivity(intent);
         });
 
-        // Set up "Forgot Password" link
-        TextView textView1 = findViewById(R.id.textView7);
-        textView1.setOnClickListener(v -> {
+        // Set up "Forgot Password" link click listener
+        TextView textViewForgotPassword = findViewById(R.id.textView7);
+        textViewForgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(OwnerLogin.this, Ownerfgp.class);
             startActivity(intent);
         });
     }
 
-    private void fetchOwnerData() {
-        // Get the UID of the current user
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private void checkOwnerInFirestore() {
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        // Fetch landlord data from Firestore
-        db.collection("landlordcollection")
-                .document(userId)
+        db.collection("LandlordCollection").document(userId)
                 .get()
                 .addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Get the data and proceed to the dashboard or next activity
-                            String name = document.getString("First-Name");
-                            Toast.makeText(OwnerLogin.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
-
-                            // Redirect to MainActivity4 (dashboard or main screen for landlords)
-                            Intent intent = new Intent(OwnerLogin.this, MainActivity4.class);
-                            startActivity(intent);
+                        if (document != null && document.exists()) {
+                            Toast.makeText(OwnerLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                            // Redirect to another activity (e.g., main dashboard for owners)
+                            startActivity(new Intent(OwnerLogin.this, MainActivity4.class));
                             finish();
                         } else {
-                            Toast.makeText(OwnerLogin.this, "No such landlord exists in the database.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OwnerLogin.this, "No owner data found.", Toast.LENGTH_LONG).show();
+                            // Optionally, log out the user
+                            mAuth.signOut();
                         }
                     } else {
-                        Toast.makeText(OwnerLogin.this, "Failed to retrieve landlord data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(OwnerLogin.this, "Failed to check owner data: " +
+                                        Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
-        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to start MainActivity3
-                Intent intent = new Intent(OwnerLogin.this, MainActivity4.class);
-                startActivity(intent);
-            }
-        });
-
-        TextView textView = findViewById(R.id.textView8);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OwnerLogin.this, OwnerCreateAcc.class);
-                startActivity(intent);
-            }
-        });
-        TextView textView1 = findViewById(R.id.textView7);
-        textView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OwnerLogin.this, Ownerfgp.class);
-                startActivity(intent);
-            }
-        });
     }
 }
