@@ -44,16 +44,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_picture"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Lucy Heartfilia"
+            android:layout_marginTop="15dp"
+            android:text="Fetching..."
             android:textSize="18sp"
             android:textStyle="bold" />
+
 
         <!-- Settings Icon to the Right of Username -->
         <ImageView
             android:id="@+id/Owner_settings_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignTop="@id/username"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
