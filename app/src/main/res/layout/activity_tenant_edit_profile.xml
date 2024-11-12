@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    tools:context=".fragments.TenantEditProfile">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <ImageButton
             android:id="@+id/tEditProfileBack"
@@ -239,7 +243,7 @@
             android:layout_toStartOf="@id/textView26"
             android:text="@string/app73"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -253,7 +257,7 @@
             android:layout_toEndOf="@id/textView26"
             android:text="@string/app74"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
@@ -288,7 +292,10 @@
             android:textColorHint="@color/black"
             android:inputType="date"
             android:textColor="@color/black"
-            android:layout_marginBottom="100dp"/>
+            android:layout_marginBottom="100dp"
+            android:focusable="false"
+            android:clickable="true" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -326,4 +333,5 @@
 
 
     </RelativeLayout>
+
 </ScrollView>
