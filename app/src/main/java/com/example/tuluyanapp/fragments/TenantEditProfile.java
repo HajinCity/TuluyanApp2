@@ -2,12 +2,16 @@ package com.example.tuluyanapp.fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.tuluyanapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,32 +44,79 @@ public class TenantEditProfile extends AppCompatActivity {
         tProfileAge = findViewById(R.id.tProfileAge);
         tBirthDate = findViewById(R.id.tBirthDate);
 
+        // Restrict tProfileAge to allow only two digits
+        tProfileAge.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Check if the length exceeds 2 digits
+                if (s.length() > 2) {
+                    tProfileAge.setText(s.subSequence(0, 2));
+                    tProfileAge.setSelection(2); // Move cursor to the end
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // Add TextWatcher to enforce single uppercase character in tMiddleName
+        tMiddleName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 1) {
+                    tMiddleName.setText(s.subSequence(0, 1));
+                    tMiddleName.setSelection(1);
+                } else if (s.length() == 1) {
+                    String capitalized = s.toString().toUpperCase();
+                    if (!s.toString().equals(capitalized)) {
+                        tMiddleName.setText(capitalized);
+                        tMiddleName.setSelection(1);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         // Set up click listener for tBirthDate to open DatePickerDialog
         tBirthDate.setOnClickListener(v -> showDatePickerDialog());
 
         fetchUserData();
+
+        // Setup save button with validation
         findViewById(R.id.saveTenantProfile).setOnClickListener(v -> saveUserData());
+
+        // Set up cancel button to return to TenantProfilePage
+        AppCompatButton cancelBtn = findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(v -> finish());
+
+        // Set up back button to return to TenantProfilePage
+        ImageButton backBtn = findViewById(R.id.tEditProfileBack);
+        backBtn.setOnClickListener(v -> finish());
     }
 
     private void showDatePickerDialog() {
-        // Get the current date
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Initialize the DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Format the date and set it on the EditText
                     String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     tBirthDate.setText(date);
                 },
                 year, month, day
         );
 
-        // Show the DatePickerDialog
         datePickerDialog.show();
     }
 
@@ -111,6 +162,19 @@ public class TenantEditProfile extends AppCompatActivity {
     }
 
     private void saveUserData() {
+        // Validate that all required fields are not empty
+        if (tFirstName.getText().toString().trim().isEmpty() ||
+                tMiddleName.getText().toString().trim().isEmpty() ||
+                tSurName.getText().toString().trim().isEmpty() ||
+                tAddress.getText().toString().trim().isEmpty() ||
+                tContactNo.getText().toString().trim().isEmpty() ||
+                tEmailAddress.getText().toString().trim().isEmpty() ||
+                tProfileAge.getText().toString().trim().isEmpty() ||
+                tBirthDate.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String userId = (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
 
         if (userId == null) {
@@ -127,7 +191,7 @@ public class TenantEditProfile extends AppCompatActivity {
                 tEmailAddress.getText().toString().trim(),
                 tProfileAge.getText().toString().trim(),
                 tBirthDate.getText().toString().trim(),
-                userId // Passing tenantId here
+                userId
         );
 
         db.collection("TenantCollection").document(userId)

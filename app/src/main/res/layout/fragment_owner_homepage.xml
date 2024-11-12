@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".fragments.OwnerHomepage">
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome back"
+        android:textSize="20sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- Large Text (e.g., Username) -->
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lucy,"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_below="@id/textView24"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp" />
+
+    <!-- Card for Number of Listings -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewListings"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_below="@id/textView25"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. of"
+                android:textSize="18sp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Listings"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/textView35"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="4dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Engagements Label -->
+    <TextView
+        android:id="@+id/textViewEngagements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Engagements"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/cardViewListings"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentStart="true" />
+
+    <!-- Card for Engagement Views -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewEngagements"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_below="@id/textViewEngagements"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="views per day"
+                android:textSize="18sp"
+                android:layout_toEndOf="@id/progressBar1"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Popular Listing Label -->
+    <TextView
+        android:id="@+id/textViewPopularListing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Popular listing"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/cardViewEngagements"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentStart="true" />
+
+    <!-- ProgressBar for Popular Listing -->
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPopularListing"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

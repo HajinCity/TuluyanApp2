@@ -39,7 +39,7 @@
             android:layout_marginTop="380dp"
             android:layout_marginEnd="100dp"
             android:background="@drawable/blue_bg"
-            android:text="@string/app11"
+            android:text="Scan Area"
             android:textColor="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
