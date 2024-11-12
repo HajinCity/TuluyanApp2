@@ -1,7 +1,6 @@
-package com.example.tuluyanapp;
+package com.example.tuluyanapp.fragments;
 
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,27 +8,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Chatfunction extends AppCompatActivity {
+import com.example.tuluyanapp.R;
 
-    private ImageButton backButton; // Declare the backButton variable
+public class OwnerSettings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_chatfunction);
-
-        backButton = findViewById(R.id.imageButtonBack); // Initialize the backButton
-
-        backButton.setOnClickListener(v -> onBackPressed()); // Set onClick listener
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        setContentView(R.layout.activity_owner_settings);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.Owner_Settings), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
     }
-
-
 }

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.tuluyanapp.R;
-import com.example.tuluyanapp.Chatfunction;
 
 public class OwnerActivitypage extends Fragment {
 

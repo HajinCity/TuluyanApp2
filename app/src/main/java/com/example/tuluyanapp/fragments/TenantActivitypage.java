@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tuluyanapp.R;
-import com.example.tuluyanapp.Chatfunction;
 
 public class TenantActivitypage extends Fragment {
 

@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tuluyanapp.fragments.TenantBookmark;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,7 +21,7 @@ import java.util.Objects;
 
 public class OwnerCreateAccActivity extends AppCompatActivity {
 
-    private EditText editTextName, editTextEmail, editTextPassword, editTextConfirmPassword;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword;
     private CheckBox checkBoxPrivacy;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
@@ -36,7 +35,8 @@ public class OwnerCreateAccActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        editTextName = findViewById(R.id.editTextTextName);
+        editTextFirstName = findViewById(R.id.editTextTextName);
+        editTextLastName = findViewById(R.id.editTextTextLastName);
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextTextConfrim);
@@ -45,13 +45,19 @@ public class OwnerCreateAccActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar4);
 
         buttonCreateAccount.setOnClickListener(v -> {
-            String name = editTextName.getText().toString().trim();
+            String firstName = editTextFirstName.getText().toString().trim();
+            String lastName = editTextLastName.getText().toString().trim();
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
             String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-            if (TextUtils.isEmpty(name)) {
-                editTextName.setError("Name is required.");
+            if (TextUtils.isEmpty(firstName)) {
+                editTextFirstName.setError("First name is required.");
+                return;
+            }
+
+            if (TextUtils.isEmpty(lastName)) {
+                editTextLastName.setError("Last name is required.");
                 return;
             }
 
@@ -81,9 +87,9 @@ public class OwnerCreateAccActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            storeOwnerData(name, email, password);
+                            storeOwnerData(firstName, lastName, email, password);
                             Toast.makeText(this, "Account created successfully.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(this, TenantBookmark.OwnerLogin.class));
+                            startActivity(new Intent(this, OwnerLogin.class));
                             finish();
                         } else {
                             Toast.makeText(this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
@@ -92,18 +98,20 @@ public class OwnerCreateAccActivity extends AppCompatActivity {
         });
     }
 
-    private void storeOwnerData(String name, String email, String password) {
+    private void storeOwnerData(String firstName, String lastName, String email, String password) {
         OwnerCreateAccountClass owner = new OwnerCreateAccountClass();
 
         if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
-            owner.setFirstName(name);
+            owner.setFirstName(firstName);
+            owner.setLastName(lastName);
             owner.setEmail(email);
             owner.setPassword(password);
             owner.setLandlordUID(uid);
 
             Map<String, Object> ownerData = new HashMap<>();
             ownerData.put("FirstName", owner.getFirstName());
+            ownerData.put("LastName", owner.getLastName());
             ownerData.put("UserAccount", owner.getEmail());
             ownerData.put("Password", owner.getPassword());
             ownerData.put("LandlordUID", owner.getLandlordUID());

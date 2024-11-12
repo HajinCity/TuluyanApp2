@@ -3,6 +3,11 @@
     <string name="facebook_app_id">https://tuluyan-user-login.firebaseapp.com/__/auth/handler</string>
     <string name="app_name">TuluyanApp</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="fetching_address">Fetching address...</string>
+    <string-array name="payment_options">
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app">Tuluyan</string>
@@ -35,7 +40,7 @@
     <string name="app28">Post</string>
     <string name="app29">Manage</string>
     <string name="app30">Confirm Password</string>
-    <string name="app31">Name</string>
+    <string name="app31">First Name</string>
     <string name="app32">Email Address</string>
     <string name="forgottxt">Enter the email or phone number, we will send you the OTP.</string>
     <string name="app34">Enter the email or phone number</string>
@@ -54,7 +59,7 @@
     <string name="app49">Edit Profile</string>
     <string name="app50"> Monkey D. Luffy</string>
     <string name="app51">\u0040monkeyluffy</string>
-    <string name="app52">Edit Profile</string>
+    <string name="app52">Tenant Profile</string>
     <string name="app53">Personal Details</string>
     <string name="app54">First Name</string>
     <string name="app55">Last Name</string>

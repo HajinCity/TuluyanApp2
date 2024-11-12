@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions for network access and media access -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Use tools:targetApi to specify API level 33 for READ_MEDIA_IMAGES -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Use tools:targetApi to specify API level 33 for READ_MEDIA_IMAGES -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
         tools:targetApi="33" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -19,36 +20,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TuluyanApp">
-
-        <!-- Activity declarations -->
+        <activity
+            android:name=".fragments.OwnerSettings"
+            android:exported="false" />
+        <activity
+            android:name=".fragments.OwnerEditProfile"
+            android:exported="false" /> <!-- Activity declarations -->
         <activity
             android:name=".fragments.TenantEditProfile"
             android:exported="false" />
         <activity
             android:name=".UserApplication"
             android:exported="false" />
-        <activity
-            android:name=".fragments.TenantBookmark"
-            android:exported="false" />
+
         <activity
             android:name=".fragments.TenantSettings"
             android:exported="false" />
         <activity
-            android:name=".Chatfunction"
-            android:exported="false" />
-
-        <!-- Main Activity with LAUNCHER intent filter -->
+            android:name=".fragments.Chatfunction"
+            android:exported="false" /> <!-- Main Activity with LAUNCHER intent filter -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Other activities -->
+        </activity> <!-- Other activities -->
         <activity
             android:name=".fragments.TenantHelp"
             android:exported="false"
@@ -66,7 +66,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.TenantBookmark$OwnerLogin"
+            android:name=".OwnerLogin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
