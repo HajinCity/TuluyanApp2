@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.tuluyanapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Calendar;
 
@@ -44,17 +45,16 @@ public class TenantEditProfile extends AppCompatActivity {
         tProfileAge = findViewById(R.id.tProfileAge);
         tBirthDate = findViewById(R.id.tBirthDate);
 
-        // Restrict tProfileAge to allow only two digits
+        // Text Watcher for Age
         tProfileAge.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Check if the length exceeds 2 digits
                 if (s.length() > 2) {
                     tProfileAge.setText(s.subSequence(0, 2));
-                    tProfileAge.setSelection(2); // Move cursor to the end
+                    tProfileAge.setSelection(2);
                 }
             }
 
@@ -62,7 +62,6 @@ public class TenantEditProfile extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Add TextWatcher to enforce single uppercase character in tMiddleName
         tMiddleName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -85,19 +84,14 @@ public class TenantEditProfile extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Set up click listener for tBirthDate to open DatePickerDialog
         tBirthDate.setOnClickListener(v -> showDatePickerDialog());
-
         fetchUserData();
 
-        // Setup save button with validation
         findViewById(R.id.saveTenantProfile).setOnClickListener(v -> saveUserData());
 
-        // Set up cancel button to return to TenantProfilePage
         AppCompatButton cancelBtn = findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(v -> finish());
 
-        // Set up back button to return to TenantProfilePage
         ImageButton backBtn = findViewById(R.id.tEditProfileBack);
         backBtn.setOnClickListener(v -> finish());
     }
@@ -128,20 +122,22 @@ public class TenantEditProfile extends AppCompatActivity {
             return;
         }
 
-        db.collection("TenantCollection").document(userId)
+        db.collection("TenantCollection")
+                .whereEqualTo("tenantId", userId)
                 .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        TenantProfileClass profile = documentSnapshot.toObject(TenantProfileClass.class);
-                        if (profile != null) {
-                            Log.d("TenantEditProfile", "User data fetched: " + profile.getFirstName());
-                            populateFields(profile);
-                        } else {
-                            Log.d("TenantEditProfile", "Profile data is null");
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Log.d("TenantEditProfile", "Document data: " + documentSnapshot.getData());
+                            TenantProfileClass profile = documentSnapshot.toObject(TenantProfileClass.class);
+                            if (profile != null) {
+                                populateFields(profile);
+                            } else {
+                                Log.d("TenantEditProfile", "Profile data is null.");
+                            }
                         }
                     } else {
-                        Log.d("TenantEditProfile", "No data found for user");
-                        Toast.makeText(this, "No data found for user", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "No data found for user.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -151,18 +147,17 @@ public class TenantEditProfile extends AppCompatActivity {
     }
 
     private void populateFields(TenantProfileClass profile) {
-        tFirstName.setText(profile.getFirstName());
-        tMiddleName.setText(profile.getMiddleName());
-        tSurName.setText(profile.getLastName());
-        tAddress.setText(profile.getAddress());
-        tContactNo.setText(profile.getContactNo());
-        tEmailAddress.setText(profile.getEmail());
-        tProfileAge.setText(profile.getAge());
-        tBirthDate.setText(profile.getBirthdate());
+        tFirstName.setText(profile.getFirstName() != null ? profile.getFirstName() : "");
+        tMiddleName.setText(profile.getMiddleName() != null ? profile.getMiddleName() : "");
+        tSurName.setText(profile.getLastName() != null ? profile.getLastName() : "");
+        tAddress.setText(profile.getAddress() != null ? profile.getAddress() : "");
+        tContactNo.setText(profile.getContactNo() != null ? profile.getContactNo() : "");
+        tEmailAddress.setText(profile.getEmail() != null ? profile.getEmail() : "");
+        tProfileAge.setText(profile.getAge() != null ? profile.getAge() : "");
+        tBirthDate.setText(profile.getBirthdate() != null ? profile.getBirthdate() : "");
     }
 
     private void saveUserData() {
-        // Validate that all required fields are not empty
         if (tFirstName.getText().toString().trim().isEmpty() ||
                 tMiddleName.getText().toString().trim().isEmpty() ||
                 tSurName.getText().toString().trim().isEmpty() ||
@@ -171,14 +166,14 @@ public class TenantEditProfile extends AppCompatActivity {
                 tEmailAddress.getText().toString().trim().isEmpty() ||
                 tProfileAge.getText().toString().trim().isEmpty() ||
                 tBirthDate.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String userId = (mAuth.getCurrentUser() != null) ? mAuth.getCurrentUser().getUid() : null;
 
         if (userId == null) {
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not authenticated.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -196,7 +191,7 @@ public class TenantEditProfile extends AppCompatActivity {
 
         db.collection("TenantCollection").document(userId)
                 .set(updatedProfile)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Error updating profile: " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 }
