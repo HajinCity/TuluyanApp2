@@ -6,8 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
+        android:layout_height="wrap_content">
 
         <!-- Image Illustration -->
         <ImageView
@@ -50,12 +49,52 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
 
+        <!-- Middle Name Input Field -->
+        <EditText
+            android:id="@+id/editTextMiddleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextTextName"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/border_rounded"
+            android:hint="Middle Initial"
+            android:inputType="text"
+            android:maxLength="1"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            android:padding="15dp"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <!-- Last Name Input Field -->
+        <EditText
+            android:id="@+id/editTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextMiddleName"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/border_rounded"
+            android:drawableStart="@drawable/user"
+            android:drawablePadding="10dp"
+            android:hint="Last Name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
         <!-- Email Input Field -->
         <EditText
             android:id="@+id/editTextTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextTextName"
+            android:layout_below="@id/editTextLastName"
             android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"

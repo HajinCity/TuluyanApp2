@@ -5,8 +5,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="fetching_address">Fetching address...</string>
     <string-array name="payment_options">
+        <item>In Person</item>
+    </string-array>
+
+    <string-array name="selection_options">
         <item>Monthly</item>
-        <item>Yearly</item>
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

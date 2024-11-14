@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".fragments.OwnerPostpage">
 
     <LinearLayout
@@ -86,9 +87,10 @@
             android:paddingBottom="8dp" />
 
         <EditText
+            android:id="@+id/board_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
+            android:hint="Title/Bed Spacers/Appartment"
             android:background="@drawable/whitebg"
             android:padding="15dp"
             android:inputType="text"
@@ -101,6 +103,7 @@
             android:layout_marginBottom="10dp">
 
             <EditText
+                android:id="@+id/board_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -116,7 +119,8 @@
                 android:padding="8dp">
 
                 <Spinner
-                    android:layout_width="130dp"
+                    android:id="@+id/board_paymentOptions"
+                    android:layout_width="180dp"
                     android:layout_height="48dp"
                     android:entries="@array/payment_options"
                     android:backgroundTint="#000000"
@@ -125,7 +129,27 @@
 
         </LinearLayout>
 
+        <Spinner
+            android:id="@+id/board_selectionOptions"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:entries="@array/selection_options"
+            android:backgroundTint="@color/black"
+            android:layout_marginBottom="10dp"
+            android:spinnerMode="dropdown" />
+
         <EditText
+            android:id="@+id/board_slots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Boarding House Slots"
+            android:background="@drawable/whitebg"
+            android:padding="15dp"
+            android:inputType="number"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/board_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address"
@@ -135,6 +159,7 @@
             android:layout_marginBottom="10dp" />
 
         <EditText
+            android:id="@+id/board_description"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:hint="Description"
@@ -144,8 +169,20 @@
             android:gravity="top"
             android:layout_marginBottom="16dp" />
 
+        <EditText
+            android:id="@+id/board_otherDetails"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Other Details"
+            android:background="@drawable/whitebg"
+            android:padding="15dp"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="180dp" />
+
         <!-- Create Button -->
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/postBoardingHouseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create"
