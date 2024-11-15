@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Image of the Boarding House -->
+    <ImageView
+        android:id="@+id/imageBoardingHouse"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/house1" />
+
+    <!-- Horizontal layout for TextView and Icons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp">
+
+        <!-- Name of the Boarding House -->
+        <TextView
+            android:id="@+id/textBoardingHouseName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Boarding House Name"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Edit Icon -->
+        <ImageView
+            android:id="@+id/editIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/post1"
+            android:contentDescription="Edit"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Delete Icon -->
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/trash"
+            android:contentDescription="Delete"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+</LinearLayout>
