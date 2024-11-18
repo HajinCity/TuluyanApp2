@@ -31,15 +31,23 @@ public class MainActivity4 extends AppCompatActivity {
         });
 
         BottomNavigationView btmnav1 = findViewById(R.id.bottom_navigation1);
-        btmnav1.setSelectedItemId(R.id.Tnav_home);  // Corrected method name
-        btmnav1.setOnItemSelectedListener(navListener1);  // Corrected method name
+        btmnav1.setOnItemSelectedListener(navListener1);
 
-        Fragment selectedFragment1 = new OwnerHomepage();
+        // Check for fragmentToLoad from Intent
+        String fragmentToLoad = getIntent().getStringExtra("fragmentToLoad");
+        Fragment selectedFragment1;
+
+        if ("OwnerPostpage".equals(fragmentToLoad)) {
+            selectedFragment1 = new OwnerPostpage();
+        } else {
+            selectedFragment1 = new OwnerHomepage(); // Default fragment
+        }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container1, selectedFragment1).commit();
     }
 
     private final NavigationBarView.OnItemSelectedListener navListener1 = item -> {
-        int itemId1 = item.getItemId();  // Corrected method to get item ID
+        int itemId1 = item.getItemId();
         Fragment selected1 = null;
 
         if (itemId1 == R.id.Tnav_home) {

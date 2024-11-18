@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@drawable/rounded_background"
+    android:padding="8dp"
+    android:layout_margin="8dp">
+
+    <!-- ImageView for the house -->
+    <ImageView
+        android:id="@+id/imageViewListing"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/app"
+        android:background="@drawable/house1"
+        android:clipToOutline="true" />
+
+    <!-- House name -->
+    <TextView
+        android:id="@+id/textViewListingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageViewListing"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="JCS House"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000" />
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/textViewListingPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageViewListing"
+        android:layout_below="@id/textViewListingName"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="PHP 2300.00/month"
+        android:textSize="14sp"
+        android:textColor="#757575" />
+
+</RelativeLayout>

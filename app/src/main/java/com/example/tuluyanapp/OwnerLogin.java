@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -22,16 +20,14 @@ public class OwnerLogin extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;  // Firestore instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_login);
 
-        // Initialize Firebase Auth and Firestore
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
         // Initialize views
         editTextEmail = findViewById(R.id.editTextTextEmailAddress);
@@ -60,8 +56,8 @@ public class OwnerLogin extends AppCompatActivity {
                     .addOnCompleteListener(OwnerLogin.this, task -> {
                         progressBar.setVisibility(View.GONE); // Hide progress bar after login completes
                         if (task.isSuccessful()) {
-                            // Check if the owner exists in LandlordCollection
-                            checkOwnerInFirestore();
+                            // Redirect to the owner's dashboard
+                            handleSuccessfulLogin();
                         } else {
                             Toast.makeText(OwnerLogin.this, "Authentication failed: " +
                                             Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
@@ -85,29 +81,10 @@ public class OwnerLogin extends AppCompatActivity {
         });
     }
 
-    private void checkOwnerInFirestore() {
-        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-
-        db.collection("LandlordCollection").document(userId)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null && document.exists()) {
-                            Toast.makeText(OwnerLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
-                            // Redirect to another activity (e.g., main dashboard for owners)
-                            startActivity(new Intent(OwnerLogin.this, MainActivity4.class));
-                            finish();
-                        } else {
-                            Toast.makeText(OwnerLogin.this, "No owner data found.", Toast.LENGTH_LONG).show();
-                            // Optionally, log out the user
-                            mAuth.signOut();
-                        }
-                    } else {
-                        Toast.makeText(OwnerLogin.this, "Failed to check owner data: " +
-                                        Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+    private void handleSuccessfulLogin() {
+        Toast.makeText(OwnerLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
+        // Redirect to the owner's dashboard
+        startActivity(new Intent(OwnerLogin.this, MainActivity4.class));
+        finish();
     }
 }

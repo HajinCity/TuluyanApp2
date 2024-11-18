@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="320dp"
+    android:background="@drawable/rounded_background"
+    android:padding="8dp"
+    android:clipToPadding="false">
+
+    <!-- ImageView with Rounded Corners -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:background="@drawable/rounded_background">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app"
+            android:src="@drawable/house1"
+            android:clipToOutline="true" />
+    </FrameLayout>
+
+    <!-- Overlay for the background -->
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" />
+
+    <!-- Star rating layout -->
+    <RelativeLayout
+        android:id="@+id/starRatingLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/star_background"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/starIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/stars" />
+
+        <TextView
+            android:id="@+id/starRatingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/starIcon"
+            android:layout_marginStart="4dp"
+            android:text="3.4"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <!-- Checkmark Icon -->
+    <ImageView
+        android:id="@+id/checkMarkIcon"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/archive_add" />
+
+    <!-- Apartment Name -->
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="8dp"
+        android:text="Parcon Apartment"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="8dp"
+        android:text="₱3000/month"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <!-- Distance -->
+    <TextView
+        android:id="@+id/textViewDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="2kms away"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -5,9 +5,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="fetching_address">Fetching address...</string>
     <string-array name="payment_options">
-        <item>Monthly</item>
-        <item>Yearly</item>
+        <item>In Person</item>
     </string-array>
+
+    <string-array name="selection_options">
+        <item>Monthly</item>
+    </string-array>
+    <string name="permission_denied_message">Location permission denied. Unable to fetch address.</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app">Tuluyan</string>

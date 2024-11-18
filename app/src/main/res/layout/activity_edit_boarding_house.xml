@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".fragments.OwnerPostpage">
+    tools:context=".fragments.EditBoardingHouseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:orientation="vertical"
         android:background="@color/white"
         android:padding="20dp"
-        android:paddingBottom="100dp"> <!-- Add bottom padding to allow for scrolling space -->
+        android:paddingBottom="100dp">
 
         <!-- Header with Image aligned to the right -->
         <RelativeLayout
@@ -30,7 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add new"
+                    android:text="Edit"
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:paddingBottom="2dp" />
@@ -87,10 +88,10 @@
             android:paddingBottom="8dp" />
 
         <EditText
-            android:id="@+id/board_title"
+            android:id="@+id/EditBoard_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title/Bed Spacers/Appartment"
+            android:hint="Title/Bed Spacers/Apartment"
             android:background="@drawable/whitebg"
             android:padding="15dp"
             android:inputType="text"
@@ -103,7 +104,7 @@
             android:layout_marginBottom="10dp">
 
             <EditText
-                android:id="@+id/board_price"
+                android:id="@+id/EditBoard_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -186,11 +187,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create"
-            android:minHeight="48dp"
-            android:padding="16dp"
             android:background="@drawable/blue_bg"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="70dp" /> <!-- Add margin to ensure it's visible -->
+            android:layout_marginBottom="70dp" />
 
     </LinearLayout>
+
 </ScrollView>

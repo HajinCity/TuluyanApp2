@@ -1,142 +1,126 @@
 package com.example.tuluyanapp.fragments;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.tuluyanapp.R;
-
-import java.io.IOException;
+import com.example.tuluyanapp.adapters.ListingBHAdapters;
+import com.example.tuluyanapp.adapters.TenantNearestBHAdapter;
+import com.example.tuluyanapp.models.ListingBHModels;
+import com.example.tuluyanapp.models.NearestBoardingH;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class TenantHomepage extends Fragment {
 
-    private TextView addressTextView;
-    private LocationManager locationManager;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
     private static final String TAG = "TenantHomepage";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Initialize the LocationManager
-        locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
-    }
+    private RecyclerView nearestBHRecyclerView;
+    private RecyclerView newListingBHRecyclerView;
+    private ProgressBar progressBarNearestBH;
+    private ProgressBar progressBarNewListing;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_homepage, container, false);
 
-        // Reference to the TextView
-        addressTextView = view.findViewById(R.id.textView24);
+        // Reference UI components
+        nearestBHRecyclerView = view.findViewById(R.id.nearestBH);
+        newListingBHRecyclerView = view.findViewById(R.id.newListingBH);
+        progressBarNearestBH = view.findViewById(R.id.progressBar9);
+        progressBarNewListing = view.findViewById(R.id.progressBar10);
 
-        // Set a default text to indicate that the address is being fetched
-        addressTextView.setText(getString(R.string.fetching_address));
-
-        // Set up window insets for edge-to-edge layout
-        ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        // Request location permission if not already granted
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-        } else {
-            // Start fetching location if permission is granted
-            getLocation();
-        }
+        // Set up RecyclerViews
+        setupNearestBHRecyclerView();
+        setupNewListingRecyclerView();
 
         return view;
     }
 
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-        // Check if permission is granted
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // Request location updates from both GPS and Network Provider
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        }
+    private void setupNearestBHRecyclerView() {
+        // Configure RecyclerView with a horizontal layout manager
+        nearestBHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        // Sample data for demonstration
+        List<NearestBoardingH> sampleData = new ArrayList<>();
+        sampleData.add(new NearestBoardingH("Parcon Apartment", "₱3000/month", "2kms away", "https://example.com/image1.jpg"));
+        sampleData.add(new NearestBoardingH("Sunrise Inn", "₱3500/month", "3kms away", "https://example.com/image2.jpg"));
+        sampleData.add(new NearestBoardingH("Cozy Stay", "₱2500/month", "1.5kms away", "https://example.com/image3.jpg"));
+
+        // Set up the adapter
+        TenantNearestBHAdapter adapter = new TenantNearestBHAdapter(getContext(), sampleData);
+        nearestBHRecyclerView.setAdapter(adapter);
+
+        // Hide progress bar after data is loaded
+        progressBarNearestBH.setVisibility(View.GONE);
     }
 
-    private final LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            Log.d(TAG, "Location changed: " + location.getLatitude() + ", " + location.getLongitude());
-            // Fetch the address based on location
-            getAddressFromLocation(location);
-        }
+    private void setupNewListingRecyclerView() {
+        // Configure RecyclerView with a horizontal layout manager
+        newListingBHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        @Override
-        public void onStatusChanged(@NonNull String provider, int status, @NonNull Bundle extras) {}
+        // Show progress bar while loading data
+        progressBarNewListing.setVisibility(View.VISIBLE);
 
-        @Override
-        public void onProviderEnabled(@NonNull String provider) {
-            Log.d(TAG, "Provider enabled: " + provider);
-        }
+        // Fetch data from Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("LandlordCollection")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<ListingBHModels> newListData = new ArrayList<>();
 
-        @Override
-        public void onProviderDisabled(@NonNull String provider) {
-            Log.d(TAG, "Provider disabled: " + provider);
-        }
-    };
+                        for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
+                            db.collection("LandlordCollection")
+                                    .document(landlordDoc.getId())
+                                    .collection("BoardingHouses")
+                                    .get()
+                                    .addOnCompleteListener(boardingHouseTask -> {
+                                        if (boardingHouseTask.isSuccessful() && boardingHouseTask.getResult() != null) {
+                                            for (QueryDocumentSnapshot boardingHouseDoc : boardingHouseTask.getResult()) {
+                                                String title = boardingHouseDoc.getString("title");
+                                                String price = String.valueOf(boardingHouseDoc.getLong("price"));
+                                                String selectionOption = boardingHouseDoc.getString("selectionOption");
+                                                String imageUrl = boardingHouseDoc.getString("imageUrl");
 
-    private void getAddressFromLocation(Location location) {
-        if (!isAdded()) {
-            Log.w(TAG, "Fragment not attached to context, skipping getAddressFromLocation");
-            return;
-        }
-        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-                String addressText = address.getAddressLine(0);
-                Log.d(TAG, "Address found: " + addressText);
-                // Display the address in the TextView
-                if (addressTextView != null) {
-                    addressTextView.post(() -> addressTextView.setText(addressText));
-                }
-            } else {
-                Log.d(TAG, "No address found for location: " + location.getLatitude() + ", " + location.getLongitude());
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to get address from location", e);
-        }
+                                                // Add to the list
+                                                newListData.add(new ListingBHModels(
+                                                        title,
+                                                        "PHP " + price + ".00, " + selectionOption,
+                                                        imageUrl
+                                                ));
+                                            }
+
+                                            // Set up the adapter after loading all data
+                                            ListingBHAdapters newAdapter = new ListingBHAdapters(getContext(), newListData);
+                                            newListingBHRecyclerView.setAdapter(newAdapter);
+
+                                            // Hide progress bar after data is loaded
+                                            progressBarNewListing.setVisibility(View.GONE);
+                                        } else {
+                                            Log.e(TAG, "Error fetching boarding houses: ", boardingHouseTask.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Log.e(TAG, "Error fetching landlord documents: ", task.getException());
+                        progressBarNewListing.setVisibility(View.GONE);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching documents: ", e);
+                    progressBarNewListing.setVisibility(View.GONE);
+                });
     }
 
-    @SuppressLint("MissingSuperCall")
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, start fetching location
-                getLocation();
-            }
-        }
-    }
 }

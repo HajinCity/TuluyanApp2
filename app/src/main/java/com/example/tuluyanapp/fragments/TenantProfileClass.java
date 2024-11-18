@@ -1,5 +1,6 @@
 package com.example.tuluyanapp.fragments;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 
 public class TenantProfileClass {
@@ -11,12 +12,15 @@ public class TenantProfileClass {
     private String email;
     private String age;
     private String birthdate;
-    private String tenantId; // Added tenantId field
+    private String tenantId;
+
+    @Exclude
+    private String password; // Excluded from Firestore deserialization
 
     // Empty constructor (required for Firebase)
     public TenantProfileClass() {}
 
-    // Constructor with parameters including tenantId
+    // Constructor
     public TenantProfileClass(String firstName, String middleName, String lastName, String address,
                               String contactNo, String email, String age, String birthdate, String tenantId) {
         this.firstName = firstName;
@@ -30,56 +34,61 @@ public class TenantProfileClass {
         this.tenantId = tenantId;
     }
 
-    // Getters and setters with Firestore field annotations
-    @PropertyName("First-Name")
+    @PropertyName("firstName")
     public String getFirstName() { return firstName; }
 
-    @PropertyName("First-Name")
+    @PropertyName("firstName")
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    @PropertyName("Middle-Name")
+    @PropertyName("middleName")
     public String getMiddleName() { return middleName; }
 
-    @PropertyName("Middle-Name")
+    @PropertyName("middleName")
     public void setMiddleName(String middleName) { this.middleName = middleName; }
 
-    @PropertyName("Last-Name")
+    @PropertyName("lastName")
     public String getLastName() { return lastName; }
 
-    @PropertyName("Last-Name")
+    @PropertyName("lastName")
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    @PropertyName("Address")
+    @PropertyName("address")
     public String getAddress() { return address; }
 
-    @PropertyName("Address")
+    @PropertyName("address")
     public void setAddress(String address) { this.address = address; }
 
-    @PropertyName("Contact-No")
+    @PropertyName("contactNo")
     public String getContactNo() { return contactNo; }
 
-    @PropertyName("Contact-No")
+    @PropertyName("contactNo")
     public void setContactNo(String contactNo) { this.contactNo = contactNo; }
 
-    @PropertyName("userAccount")
+    @PropertyName("email")
     public String getEmail() { return email; }
 
-    @PropertyName("userAccount")
+    @PropertyName("email")
     public void setEmail(String email) { this.email = email; }
 
-    @PropertyName("Age")
+    @PropertyName("age")
     public String getAge() { return age; }
 
-    @PropertyName("Age")
+    @PropertyName("age")
     public void setAge(String age) { this.age = age; }
 
-    @PropertyName("Birthdate")
+    @PropertyName("birthdate")
     public String getBirthdate() { return birthdate; }
 
-    @PropertyName("Birthdate")
+    @PropertyName("birthdate")
     public void setBirthdate(String birthdate) { this.birthdate = birthdate; }
 
     public String getTenantId() { return tenantId; }
 
     public void setTenantId(String tenantId) { this.tenantId = tenantId; }
+
+    @Exclude
+    public String getPassword() { return password; }
+
+    @Exclude
+    public void setPassword(String password) { this.password = password; }
 }

@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -22,7 +20,6 @@ public class UserLogin extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;  // Firestore instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,6 @@ public class UserLogin extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();  // Initialize Firestore
 
         // Initialize views
         editTextEmail = findViewById(R.id.editTextTextEmailAddress2);
@@ -60,8 +56,8 @@ public class UserLogin extends AppCompatActivity {
                     .addOnCompleteListener(UserLogin.this, task -> {
                         progressBar.setVisibility(View.GONE); // Hide progress bar after login completes
                         if (task.isSuccessful()) {
-                            // Check if the user exists in tenantCollection
-                            checkTenantInFirestore();
+                            // Redirect to the tenant dashboard
+                            handleSuccessfulLogin();
                         } else {
                             Toast.makeText(UserLogin.this, "Authentication failed: " +
                                             Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
@@ -85,29 +81,10 @@ public class UserLogin extends AppCompatActivity {
         });
     }
 
-    private void checkTenantInFirestore() {
-        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-
-        db.collection("TenantCollection").document(userId)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null && document.exists()) {
-                            Toast.makeText(UserLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
-                            // Redirect to another activity (e.g., main dashboard)
-                            startActivity(new Intent(UserLogin.this, MainActivity3.class));
-                            finish();
-                        } else {
-                            Toast.makeText(UserLogin.this, "No tenant data found.", Toast.LENGTH_LONG).show();
-                            // Optionally, log out the user
-                            mAuth.signOut();
-                        }
-                    } else {
-                        Toast.makeText(UserLogin.this, "Failed to check tenant data: " +
-                                        Objects.requireNonNullElse(task.getException(), new Exception("Unknown error")).getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+    private void handleSuccessfulLogin() {
+        Toast.makeText(UserLogin.this, "Login successful.", Toast.LENGTH_SHORT).show();
+        // Redirect to the tenant dashboard
+        startActivity(new Intent(UserLogin.this, MainActivity3.class));
+        finish();
     }
 }

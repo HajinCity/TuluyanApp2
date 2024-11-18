@@ -47,10 +47,31 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextLastName"
+            android:id="@+id/editTextTextMiddleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextTextName"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/border_rounded"
+            android:drawableStart="@drawable/user"
+            android:drawablePadding="10dp"
+            android:hint="Middle Initial"
+            android:inputType="text"
+            android:maxLength="1"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:minHeight="48dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextTextMiddleName"
             android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
