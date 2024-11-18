@@ -1,6 +1,7 @@
 package com.example.tuluyanapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.fragments.EditBoardingHouseActivity;
 import com.example.tuluyanapp.models.BoardingHouse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,9 +42,20 @@ public class BoardingHouseAdapter extends RecyclerView.Adapter<BoardingHouseAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BoardingHouse boardingHouse = boardingHouseList.get(position);
 
+        // Set the static image and name
+        holder.imageBoardingHouse.setImageResource(R.drawable.house1);
         holder.textBoardingHouseName.setText(boardingHouse.getTitle());
-        Glide.with(context).load(boardingHouse.getImageUrl()).into(holder.imageBoardingHouse);
 
+        // Navigate to EditBoardingHouseActivity
+        holder.editIcon.setOnClickListener(v -> {
+            String landlordId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Fetch landlordId
+            Intent intent = new Intent(context, EditBoardingHouseActivity.class);
+            intent.putExtra("landlordId", landlordId); // Pass landlordId
+            intent.putExtra("boardingHouseId", boardingHouse.getId()); // Pass boardingHouseId
+            context.startActivity(intent);
+        });
+
+        // Handle delete logic
         holder.deleteIcon.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Delete Confirmation")
@@ -53,9 +65,9 @@ public class BoardingHouseAdapter extends RecyclerView.Adapter<BoardingHouseAdap
                         String landlordUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         db.collection("LandlordCollection")
-                                .document(landlordUID) // Parent document
-                                .collection("BoardingHouses") // Subcollection
-                                .document(boardingHouse.getId()) // Document ID
+                                .document(landlordUID)
+                                .collection("BoardingHouses")
+                                .document(boardingHouse.getId())
                                 .delete()
                                 .addOnSuccessListener(aVoid -> {
                                     boardingHouseList.remove(position);

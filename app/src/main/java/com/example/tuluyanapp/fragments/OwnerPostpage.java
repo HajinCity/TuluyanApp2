@@ -177,8 +177,15 @@ public class OwnerPostpage extends Fragment {
             return;
         }
 
+        // Generate a unique boardingHouseId
+        String boardingHouseId = db.collection("LandlordCollection")
+                .document(userUID)
+                .collection("BoardingHouses")
+                .document()
+                .getId();
+
         Map<String, Object> boardingHouse = new HashMap<>();
-        boardingHouse.put("userUID", userUID);
+        boardingHouse.put("boardingHouseId", boardingHouseId); // Replace userUID with boardingHouseId
         boardingHouse.put("title", title);
         boardingHouse.put("price", price);
         boardingHouse.put("paymentOption", paymentOption);
@@ -191,8 +198,9 @@ public class OwnerPostpage extends Fragment {
         db.collection("LandlordCollection")
                 .document(userUID)
                 .collection("BoardingHouses")
-                .add(boardingHouse)
-                .addOnSuccessListener(documentReference -> {
+                .document(boardingHouseId) // Use boardingHouseId as the document ID
+                .set(boardingHouse)
+                .addOnSuccessListener(unused -> {
                     Toast.makeText(getContext(), "Boarding house posted successfully!", Toast.LENGTH_SHORT).show();
                     clearFields();
                 })

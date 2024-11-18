@@ -44,6 +44,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1") // For annotation processing
 
+    // Add osmdroid dependency
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
