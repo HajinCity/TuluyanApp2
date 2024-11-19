@@ -65,7 +65,7 @@ public class TenantHomepage extends Fragment {
                     addressTextView.setText(R.string.permission_denied_message);
                 }
             });
-
+//okay
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
