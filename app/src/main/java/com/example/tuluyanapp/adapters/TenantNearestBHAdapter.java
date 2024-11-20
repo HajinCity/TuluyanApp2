@@ -1,6 +1,7 @@
 package com.example.tuluyanapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.fragments.TenantViewsBoardingHouse;
 import com.example.tuluyanapp.models.NearestBoardingH;
 
 import java.util.List;
@@ -37,6 +39,7 @@ public class TenantNearestBHAdapter extends RecyclerView.Adapter<TenantNearestBH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NearestBoardingH item = boardingHouseList.get(position);
 
+        // Bind data to views
         holder.textViewName.setText(item.getName());
         holder.textViewPrice.setText(item.getPrice());
         holder.textViewDistance.setText(item.getDistance());
@@ -44,8 +47,18 @@ public class TenantNearestBHAdapter extends RecyclerView.Adapter<TenantNearestBH
         // Load the image using Glide
         Glide.with(context)
                 .load(item.getImageUrl())
-                .placeholder(R.drawable.house1) // Replace with your placeholder drawable
+                .placeholder(R.drawable.house1)
                 .into(holder.imageView);
+
+        // Set click listener to navigate
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TenantViewsBoardingHouse.class);
+            intent.putExtra("BOARDING_HOUSE_ID", item.getBoardingHouseId());
+            intent.putExtra("ownerName", item.getOwnerName());
+            intent.putExtra("paymentOption", item.getPaymentOption());
+            intent.putExtra("distance", item.getDistance()); // Pass calculated distance
+            context.startActivity(intent);
+        });
     }
 
     @Override
