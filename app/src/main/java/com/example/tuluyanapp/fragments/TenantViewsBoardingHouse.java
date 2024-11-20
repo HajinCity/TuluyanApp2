@@ -1,7 +1,9 @@
 package com.example.tuluyanapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
 
     private TextView apartmentName, apartmentPrice, descriptionDetails, addressDetails, distanceText, ownerName, paymentOption;
     private ImageView topImage, ownerAvatar;
+    private Double latitude = null;
+    private Double longitude = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +32,14 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
         String boardingHouseId = getIntent().getStringExtra("BOARDING_HOUSE_ID");
         String ownerNameText = getIntent().getStringExtra("ownerName");
         String paymentOptionText = getIntent().getStringExtra("paymentOption");
-        String distanceTextValue = getIntent().getStringExtra("distance"); // Distance value
+        String distanceTextValue = getIntent().getStringExtra("distance");
 
         // Reference UI elements
         apartmentName = findViewById(R.id.apartmentName);
         apartmentPrice = findViewById(R.id.apartmentPrice);
         descriptionDetails = findViewById(R.id.descriptionDetails);
         addressDetails = findViewById(R.id.addressDetails);
-        distanceText = findViewById(R.id.distanceText); // Reference distanceText
+        distanceText = findViewById(R.id.distanceText);
         ownerName = findViewById(R.id.ownerName);
         paymentOption = findViewById(R.id.paymentOption);
         topImage = findViewById(R.id.topImage);
@@ -43,7 +47,7 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
 
         // Set values to UI
         if (distanceTextValue != null) {
-            distanceText.setText(distanceTextValue); // Set distance to distanceText
+            distanceText.setText(distanceTextValue);
         }
 
         if (paymentOptionText != null) {
@@ -59,6 +63,18 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
         } else {
             Log.e(TAG, "No Boarding House ID provided");
         }
+
+        // Set OnClickListener for "Get Directions" button
+        Button mapViewButton = findViewById(R.id.mapViewButton);
+        mapViewButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TenantViewsBoardingHouse.this, TenantGetDirections.class);
+
+            // Pass latitude and longitude to the next activity
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+
+            startActivity(intent);
+        });
     }
 
     private void fetchBoardingHouseData(String boardingHouseId) {
@@ -69,7 +85,6 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
-                            // Fetch Boarding House Data
                             db.collection("LandlordCollection")
                                     .document(landlordDoc.getId())
                                     .collection("BoardingHouses")
@@ -82,6 +97,11 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
                                             String description = documentSnapshot.getString("description");
                                             String imageUrl = documentSnapshot.getString("imageUrl");
                                             Long price = documentSnapshot.getLong("price");
+
+                                            latitude = documentSnapshot.getDouble("latitude");
+                                            longitude = documentSnapshot.getDouble("longitude");
+
+                                            Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
 
                                             // Update UI
                                             apartmentName.setText(title);

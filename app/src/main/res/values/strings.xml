@@ -7,13 +7,14 @@
     <string-array name="payment_options">
         <item>In Person</item>
     </string-array>
+    <string name="graphhopper_api_key">938b3113-7e26-4d5a-9c70-4808ace8832f</string>
 
     <string-array name="selection_options">
         <item>Monthly</item>
     </string-array>
     <string name="permission_denied_message">Location permission denied. Unable to fetch address.</string>
     <string name="price_format">PHP %1$d.00/month</string>
-
+    <string name="directions">Directions</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app">Tuluyan</string>
     <string name="app1">Welcome to</string>

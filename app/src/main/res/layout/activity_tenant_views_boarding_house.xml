@@ -376,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#E0E0E0"
-                    android:text="Map View"
+                    android:text="Get Directions"
                     android:textColor="#000000" />
 
                 <Button

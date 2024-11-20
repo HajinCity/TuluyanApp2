@@ -47,6 +47,7 @@ dependencies {
 
     // Add osmdroid dependency
     implementation("org.osmdroid:osmdroid-android:6.1.14")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
