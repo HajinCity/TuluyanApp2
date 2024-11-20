@@ -65,18 +65,15 @@ public class TenantHomepage extends Fragment {
                     addressTextView.setText(R.string.permission_denied_message);
                 }
             });
-//okay
-    //okay
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialize LocationManager
         locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_homepage, container, false);
 
         // Reference UI components
@@ -100,31 +97,13 @@ public class TenantHomepage extends Fragment {
     }
 
     private void setupNearestBHRecyclerView() {
-        // Configure RecyclerView with a horizontal layout manager
         nearestBHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        // Sample data for demonstration
-        List<NearestBoardingH> sampleData = new ArrayList<>();
-        sampleData.add(new NearestBoardingH("Parcon Apartment", "₱3000/month", "2kms away", "https://example.com/image1.jpg"));
-        sampleData.add(new NearestBoardingH("Sunrise Inn", "₱3500/month", "3kms away", "https://example.com/image2.jpg"));
-        sampleData.add(new NearestBoardingH("Cozy Stay", "₱2500/month", "1.5kms away", "https://example.com/image3.jpg"));
-
-        // Set up the adapter
-        TenantNearestBHAdapter adapter = new TenantNearestBHAdapter(getContext(), sampleData);
-        nearestBHRecyclerView.setAdapter(adapter);
-
-        // Hide progress bar after data is loaded
-        progressBarNearestBH.setVisibility(View.GONE);
     }
 
     private void setupNewListingRecyclerView() {
-        // Configure RecyclerView with a horizontal layout manager
         newListingBHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        // Show progress bar while loading data
         progressBarNewListing.setVisibility(View.VISIBLE);
 
-        // Fetch data from Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("LandlordCollection")
                 .get()
@@ -133,6 +112,10 @@ public class TenantHomepage extends Fragment {
                         List<ListingBHModels> newListData = new ArrayList<>();
 
                         for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
+                            String firstName = landlordDoc.getString("FirstName");
+                            String lastName = landlordDoc.getString("LastName");
+                            String ownerName = firstName + " " + lastName; // Combine FirstName and LastName
+
                             db.collection("LandlordCollection")
                                     .document(landlordDoc.getId())
                                     .collection("BoardingHouses")
@@ -140,24 +123,49 @@ public class TenantHomepage extends Fragment {
                                     .addOnCompleteListener(boardingHouseTask -> {
                                         if (boardingHouseTask.isSuccessful() && boardingHouseTask.getResult() != null) {
                                             for (QueryDocumentSnapshot boardingHouseDoc : boardingHouseTask.getResult()) {
+                                                String boardingHouseId = boardingHouseDoc.getId();
                                                 String title = boardingHouseDoc.getString("title");
-                                                String price = String.valueOf(boardingHouseDoc.getLong("price"));
-                                                String selectionOption = boardingHouseDoc.getString("selectionOption");
+                                                String price = "₱" + boardingHouseDoc.getLong("price") + "/month";
                                                 String imageUrl = boardingHouseDoc.getString("imageUrl");
+                                                String paymentOption = boardingHouseDoc.getString("paymentOption");
+                                                Double latitude = boardingHouseDoc.getDouble("latitude");
+                                                Double longitude = boardingHouseDoc.getDouble("longitude");
 
-                                                // Add to the list
+                                                String distance = "Unknown";
+
+                                                // Get the user's current location
+                                                Location userLocation = null;
+                                                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                                                        ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                                    userLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                                                }
+
+                                                // Calculate distance only if current location and target coordinates are available
+                                                if (userLocation != null && latitude != null && longitude != null) {
+                                                    Location targetLocation = new Location("Target");
+                                                    targetLocation.setLatitude(latitude);
+                                                    targetLocation.setLongitude(longitude);
+
+                                                    float distanceInMeters = userLocation.distanceTo(targetLocation);
+                                                    float distanceInKm = distanceInMeters / 1000; // Convert meters to kilometers
+                                                    distance = String.format(Locale.getDefault(), "%.1f km away", distanceInKm);
+                                                }
+
+                                                // Add data to the list
                                                 newListData.add(new ListingBHModels(
-                                                        title,
-                                                        "PHP " + price + ".00, " + selectionOption,
-                                                        imageUrl
+                                                        boardingHouseId, // Boarding house ID
+                                                        title, // Boarding house title
+                                                        price, // Price
+                                                        imageUrl, // Image URL
+                                                        ownerName, // Owner name
+                                                        paymentOption, // Payment option
+                                                        distance // Distance
                                                 ));
                                             }
 
-                                            // Set up the adapter after loading all data
+                                            // Set adapter
                                             ListingBHAdapters newAdapter = new ListingBHAdapters(getContext(), newListData);
                                             newListingBHRecyclerView.setAdapter(newAdapter);
-
-                                            // Hide progress bar after data is loaded
                                             progressBarNewListing.setVisibility(View.GONE);
                                         } else {
                                             Log.e(TAG, "Error fetching boarding houses: ", boardingHouseTask.getException());
@@ -175,6 +183,9 @@ public class TenantHomepage extends Fragment {
                 });
     }
 
+
+
+
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -188,6 +199,7 @@ public class TenantHomepage extends Fragment {
         public void onLocationChanged(@NonNull Location location) {
             Log.d(TAG, "Location: " + location.getLatitude() + ", " + location.getLongitude());
             updateAddress(location);
+            fetchAndDisplayNearestBoardingHouses(location);
         }
 
         @Override
@@ -216,6 +228,82 @@ public class TenantHomepage extends Fragment {
             Log.e(TAG, "Failed to fetch address", e);
         }
     }
+
+    private void fetchAndDisplayNearestBoardingHouses(Location userLocation) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<NearestBoardingH> nearestBHList = new ArrayList<>();
+
+        db.collection("LandlordCollection")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
+                            String firstName = landlordDoc.getString("FirstName");
+                            String lastName = landlordDoc.getString("LastName");
+                            String ownerName = firstName + " " + lastName; // Combine FirstName and LastName
+
+                            db.collection("LandlordCollection")
+                                    .document(landlordDoc.getId())
+                                    .collection("BoardingHouses")
+                                    .get()
+                                    .addOnCompleteListener(boardingHouseTask -> {
+                                        if (boardingHouseTask.isSuccessful() && boardingHouseTask.getResult() != null) {
+                                            for (QueryDocumentSnapshot boardingHouseDoc : boardingHouseTask.getResult()) {
+                                                String boardingHouseId = boardingHouseDoc.getId();
+                                                String title = boardingHouseDoc.getString("title");
+                                                String price = "₱" + boardingHouseDoc.getLong("price") + "/month";
+                                                Double latitude = boardingHouseDoc.getDouble("latitude");
+                                                Double longitude = boardingHouseDoc.getDouble("longitude");
+                                                String imageUrl = boardingHouseDoc.getString("imageUrl");
+                                                String paymentOption = boardingHouseDoc.getString("paymentOption");
+
+                                                if (latitude != null && longitude != null) {
+                                                    float[] results = new float[1];
+                                                    Location.distanceBetween(
+                                                            userLocation.getLatitude(),
+                                                            userLocation.getLongitude(),
+                                                            latitude,
+                                                            longitude,
+                                                            results);
+                                                    float distanceInKm = results[0] / 1000;
+
+                                                    if (distanceInKm <= 3.0) {
+                                                        nearestBHList.add(new NearestBoardingH(
+                                                                boardingHouseId,
+                                                                title,
+                                                                price,
+                                                                String.format(Locale.getDefault(), "%.1f km away", distanceInKm),
+                                                                imageUrl,
+                                                                ownerName,
+                                                                paymentOption
+                                                        ));
+                                                    }
+                                                } else {
+                                                    Log.w(TAG, "Latitude or Longitude is null for boarding house: " + title);
+                                                }
+                                            }
+
+                                            TenantNearestBHAdapter adapter = new TenantNearestBHAdapter(getContext(), nearestBHList);
+                                            nearestBHRecyclerView.setAdapter(adapter);
+                                            progressBarNearestBH.setVisibility(View.GONE);
+                                        } else {
+                                            Log.e(TAG, "Error fetching boarding houses: ", boardingHouseTask.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Log.e(TAG, "Error fetching landlord documents: ", task.getException());
+                        progressBarNearestBH.setVisibility(View.GONE);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching documents: ", e);
+                    progressBarNearestBH.setVisibility(View.GONE);
+                });
+    }
+
+
+
 
     @Override
     public void onDestroy() {

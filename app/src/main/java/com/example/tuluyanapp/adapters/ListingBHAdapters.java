@@ -1,6 +1,7 @@
 package com.example.tuluyanapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.fragments.TenantViewsBoardingHouse;
 import com.example.tuluyanapp.models.ListingBHModels;
 
 import java.util.List;
@@ -45,6 +47,19 @@ public class ListingBHAdapters extends RecyclerView.Adapter<ListingBHAdapters.Vi
                 .load(house.getImageUrl())
                 .placeholder(R.drawable.house1) // Replace with a proper placeholder drawable
                 .into(holder.imageView);
+
+        // Set click listener to navigate
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TenantViewsBoardingHouse.class);
+            intent.putExtra("BOARDING_HOUSE_ID", house.getBoardingHouseId());
+            intent.putExtra("name", house.getName());
+            intent.putExtra("price", house.getPrice());
+            intent.putExtra("imageUrl", house.getImageUrl());
+            intent.putExtra("ownerName", house.getOwnerName());
+            intent.putExtra("paymentOption", house.getPaymentOption());
+            intent.putExtra("distance", house.getDistance()); // Pass the calculated distance
+            context.startActivity(intent);
+        });
     }
 
     @Override

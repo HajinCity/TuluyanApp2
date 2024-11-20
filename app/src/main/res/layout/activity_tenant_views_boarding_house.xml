@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".fragments.TenantViewsBoardingHouse">
+
+    <!-- ScrollView wrapping all the content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/contentContainerImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Top Image Section -->
+                <ImageView
+                    android:id="@+id/topImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/house1" />
+
+                <!-- Distance -->
+                <TextView
+                    android:id="@+id/distanceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="#80000000"
+                    android:padding="8dp"
+                    android:text="2kms away"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_alignBottom="@id/topImage"
+                    android:layout_alignStart="@id/topImage" />
+
+                <!-- Back Button -->
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/arrow_square_left"
+                    android:layout_margin="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="Back Button" />
+
+                <!-- Bookmark Icon -->
+                <ImageView
+                    android:id="@+id/bookmarkIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/archive_add"
+                    android:layout_margin="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="Bookmark Icon" />
+
+            </RelativeLayout>
+
+            <!-- Details Section -->
+            <RelativeLayout
+                android:id="@+id/detailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topImage"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <!-- Apartment Name -->
+                <TextView
+                    android:id="@+id/apartmentName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parcon Apartment"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/apartmentPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/apartmentName"
+                    android:layout_marginTop="8dp"
+                    android:text="PHP 3000/month"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <!-- Star Rating -->
+                <RelativeLayout
+                    android:id="@+id/starRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/apartmentPrice"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:id="@+id/starIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/stars" />
+
+                    <TextView
+                        android:id="@+id/starRatingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/starIcon"
+                        android:layout_marginStart="8dp"
+                        android:text="3.4"
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- Owner Info Section -->
+            <RelativeLayout
+                android:id="@+id/ownerInfoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailsContainer"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <!-- Owner Avatar -->
+                <ImageView
+                    android:id="@+id/ownerAvatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/pic"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/circle_background" />
+
+                <!-- Owner Name -->
+                <TextView
+                    android:id="@+id/ownerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/ownerAvatar"
+                    android:layout_marginStart="12dp"
+                    android:text="Lucy Heartfilia"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <!-- Owner Role -->
+                <TextView
+                    android:id="@+id/ownerRole"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ownerName"
+                    android:layout_toEndOf="@id/ownerAvatar"
+                    android:layout_marginStart="12dp"
+                    android:text="Owner"
+                    android:textSize="14sp"
+                    android:textColor="#888888" />
+
+                <!-- Chat Icon -->
+                <ImageView
+                    android:id="@+id/chatIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/messages"
+                    android:layout_marginEnd="8dp" />
+            </RelativeLayout>
+
+            <!-- Tabs for Details and Reviews -->
+            <LinearLayout
+                android:id="@+id/tabsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/ownerInfoContainer"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tabDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Details"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue" />
+
+                <TextView
+                    android:id="@+id/tabReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews"
+                    android:textSize="16sp"
+                    android:textColor="#888888" />
+            </LinearLayout>
+
+            <!-- Address Section -->
+            <RelativeLayout
+                android:id="@+id/addressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tabsContainer"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/addressTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/addressDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addressTitle"
+                    android:layout_marginTop="4dp"
+                    android:text="San Vicente Central (Pob.), Calapan, Oriental Mindoro"
+                    android:textSize="14sp"
+                    android:textColor="#555555" />
+            </RelativeLayout>
+
+            <!-- Description Section -->
+            <RelativeLayout
+                android:id="@+id/descriptionContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addressContainer"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/descriptionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/descriptionDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/descriptionTitle"
+                    android:layout_marginTop="4dp"
+                    android:text="We have 3 rooms available"
+                    android:textSize="14sp"
+                    android:textColor="#555555" />
+            </RelativeLayout>
+
+            <!-- Payment Section -->
+            <RelativeLayout
+                android:id="@+id/paymentOptionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addressContainer"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/paymentDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Method"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/paymentOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/paymentDescription"
+                    android:layout_marginTop="4dp"
+                    android:text="Payment"
+                    android:textSize="14sp"
+                    android:textColor="#555555" />
+            </RelativeLayout>
+
+            <!-- Other Details Section -->
+            <RelativeLayout
+                android:id="@+id/otherDetailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/descriptionContainer"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/otherDetailsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other details"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <!-- Details List -->
+                <LinearLayout
+                    android:id="@+id/detailsListContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/otherDetailsTitle"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wi-Fi (Additional Charges)"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Laundry Facilities"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Study Areas"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Bicycle Storage"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Shared Kitchen"
+                        android:textSize="14sp"
+                        android:textColor="#555555" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- Bottom Buttons -->
+            <LinearLayout
+                android:id="@+id/bottomButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/mapViewButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#E0E0E0"
+                    android:text="Map View"
+                    android:textColor="#000000" />
+
+                <Button
+                    android:id="@+id/rentButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#3F51B5"
+                    android:text="Rent"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
