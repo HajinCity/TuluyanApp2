@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/light_green">
+
+    <ImageView
+        android:id="@+id/successIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/checkg"
+        android:layout_centerHorizontal="true"
+         />
+
+    <TextView
+        android:id="@+id/successMessageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Success"
+        android:textSize="20sp"
+        android:textColor="@color/green"
+        android:layout_below="@id/successIcon"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/successMessageBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wait for the confirmation"
+        android:textSize="16sp"
+        android:layout_below="@id/successMessageTitle"
+        android:layout_marginTop="4dp"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

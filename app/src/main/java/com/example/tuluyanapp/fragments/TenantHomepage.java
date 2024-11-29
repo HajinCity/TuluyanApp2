@@ -101,6 +101,11 @@ public class TenantHomepage extends Fragment {
     }
 
     private void setupNewListingRecyclerView() {
+        if (!isAdded()) {
+            Log.e(TAG, "Fragment is not attached, skipping setupNewListingRecyclerView.");
+            return;
+        }
+
         newListingBHRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         progressBarNewListing.setVisibility(View.VISIBLE);
 
@@ -108,6 +113,11 @@ public class TenantHomepage extends Fragment {
         db.collection("LandlordCollection")
                 .get()
                 .addOnCompleteListener(task -> {
+                    if (!isAdded()) { // Check if fragment is still attached before proceeding
+                        Log.e(TAG, "Fragment is not attached, ignoring task result.");
+                        return;
+                    }
+
                     if (task.isSuccessful() && task.getResult() != null) {
                         List<ListingBHModels> newListData = new ArrayList<>();
 
@@ -121,6 +131,11 @@ public class TenantHomepage extends Fragment {
                                     .collection("BoardingHouses")
                                     .get()
                                     .addOnCompleteListener(boardingHouseTask -> {
+                                        if (!isAdded()) { // Check again before setting the adapter
+                                            Log.e(TAG, "Fragment is not attached, ignoring boarding house task result.");
+                                            return;
+                                        }
+
                                         if (boardingHouseTask.isSuccessful() && boardingHouseTask.getResult() != null) {
                                             for (QueryDocumentSnapshot boardingHouseDoc : boardingHouseTask.getResult()) {
                                                 String boardingHouseId = boardingHouseDoc.getId();
@@ -140,7 +155,6 @@ public class TenantHomepage extends Fragment {
                                                     userLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                                                 }
 
-                                                // Calculate distance only if current location and target coordinates are available
                                                 if (userLocation != null && latitude != null && longitude != null) {
                                                     Location targetLocation = new Location("Target");
                                                     targetLocation.setLatitude(latitude);
@@ -151,19 +165,17 @@ public class TenantHomepage extends Fragment {
                                                     distance = String.format(Locale.getDefault(), "%.1f km away", distanceInKm);
                                                 }
 
-                                                // Add data to the list
                                                 newListData.add(new ListingBHModels(
-                                                        boardingHouseId, // Boarding house ID
-                                                        title, // Boarding house title
-                                                        price, // Price
-                                                        imageUrl, // Image URL
-                                                        ownerName, // Owner name
-                                                        paymentOption, // Payment option
-                                                        distance // Distance
+                                                        boardingHouseId,
+                                                        title,
+                                                        price,
+                                                        imageUrl,
+                                                        ownerName,
+                                                        paymentOption,
+                                                        distance
                                                 ));
                                             }
 
-                                            // Set adapter
                                             ListingBHAdapters newAdapter = new ListingBHAdapters(getContext(), newListData);
                                             newListingBHRecyclerView.setAdapter(newAdapter);
                                             progressBarNewListing.setVisibility(View.GONE);
@@ -182,6 +194,7 @@ public class TenantHomepage extends Fragment {
                     progressBarNewListing.setVisibility(View.GONE);
                 });
     }
+
 
 
 

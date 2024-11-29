@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,13 +71,11 @@ public class Tenantsearchpage extends Fragment {
                         List<TenantSearchedModel> tenantSearchData = new ArrayList<>();
 
                         for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
-                            // Fetch owner's name
                             String firstName = landlordDoc.getString("FirstName");
                             String middleName = landlordDoc.getString("MiddleName");
                             String lastName = landlordDoc.getString("LastName");
                             String ownerName = firstName + " " + middleName + " " + lastName;
 
-                            // Fetch boarding houses for the landlord
                             db.collection("LandlordCollection")
                                     .document(landlordDoc.getId())
                                     .collection("BoardingHouses")
@@ -84,25 +83,30 @@ public class Tenantsearchpage extends Fragment {
                                     .addOnCompleteListener(boardingHouseTask -> {
                                         if (boardingHouseTask.isSuccessful() && boardingHouseTask.getResult() != null) {
                                             for (QueryDocumentSnapshot boardingHouseDoc : boardingHouseTask.getResult()) {
-                                                // Fetch boarding house details
                                                 String title = boardingHouseDoc.getString("title");
                                                 int price = boardingHouseDoc.getLong("price").intValue();
                                                 String selectionOption = boardingHouseDoc.getString("selectionOption");
-                                                String combinedPriceOption = "₱" + price + " (" + selectionOption + ")";
-                                                String propertyImage = boardingHouseDoc.getString("propertyImage");
-                                                String ownerImage = landlordDoc.getString("ownerImage");
+                                                String boardingHouseId = boardingHouseDoc.getId();
 
-                                                // Add data to the list
                                                 tenantSearchData.add(new TenantSearchedModel(
-                                                        ownerName, // Owner's name
-                                                        title,     // Boarding house title
-                                                        price,     // Price
-                                                        selectionOption // Selection option
+                                                        ownerName,
+                                                        title,
+                                                        price,
+                                                        selectionOption,
+                                                        boardingHouseId
                                                 ));
                                             }
 
-                                            // Bind data to RecyclerView
                                             TenantSearchAdapter adapter = new TenantSearchAdapter(getContext(), tenantSearchData);
+                                            adapter.setOnItemClickListener(tenant -> {
+                                                // Intent to TenantViewsBoardingHouse
+                                                Intent intent = new Intent(getContext(), TenantViewsBoardingHouse.class);
+                                                intent.putExtra("BOARDING_HOUSE_ID", tenant.getBoardingHouseId());
+                                                intent.putExtra("ownerName", tenant.getOwnerName());
+                                                intent.putExtra("paymentOption", tenant.getSelectionOption());
+                                                startActivity(intent);
+                                            });
+
                                             searchedItemsRecyclerView.setAdapter(adapter);
                                             progressBar.setVisibility(View.GONE); // Hide ProgressBar
                                         } else {
@@ -120,4 +124,5 @@ public class Tenantsearchpage extends Fragment {
                     progressBar.setVisibility(View.GONE); // Hide ProgressBar
                 });
     }
+
 }

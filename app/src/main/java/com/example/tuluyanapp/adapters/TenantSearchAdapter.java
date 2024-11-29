@@ -18,6 +18,15 @@ public class TenantSearchAdapter extends RecyclerView.Adapter<TenantSearchAdapte
 
     private final Context context;
     private final List<TenantSearchedModel> tenantList;
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(TenantSearchedModel tenant);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     public TenantSearchAdapter(Context context, List<TenantSearchedModel> tenantList) {
         this.context = context;
@@ -38,7 +47,14 @@ public class TenantSearchAdapter extends RecyclerView.Adapter<TenantSearchAdapte
         // Bind data to the views
         holder.ownerName.setText(model.getOwnerName()); // Owner's full name
         holder.propertyName.setText(model.getTitle()); // Boarding house title
-        holder.propertyPrice.setText("₱" + model.getPrice() + " (" + model.getSelectionOption() + ")"); // Combined price and selection option
+        holder.propertyPrice.setText(model.getPropertyPrice()); // Combined price and selection option
+
+        // Set click listener for the item
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(model);
+            }
+        });
     }
 
     @Override
