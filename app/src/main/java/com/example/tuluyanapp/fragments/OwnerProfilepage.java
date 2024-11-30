@@ -2,6 +2,7 @@ package com.example.tuluyanapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +31,8 @@ import java.util.List;
 
 public class OwnerProfilepage extends Fragment {
 
+    private static final String TAG = "OwnerProfilepage";
+
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private TextView usernameTextView;
@@ -57,13 +60,13 @@ public class OwnerProfilepage extends Fragment {
 
         // Set up RecyclerView
         tenantRequestList = new ArrayList<>();
-        requestsAdapter = new TenantRequestApplicationAdapter(tenantRequestList);
+        requestsAdapter = new TenantRequestApplicationAdapter(requireContext(), tenantRequestList);
         requestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         requestsRecyclerView.setAdapter(requestsAdapter);
 
         // Fetch and display user data
-        fetchOwnerName(); // Fetch owner name
-        fetchTenantRequests(); // Fetch tenant requests
+        fetchOwnerName();
+        fetchTenantRequests();
 
         // Set up settings icon click listener for popup menu
         settingsIcon.setOnClickListener(this::showPopupMenu);
@@ -89,9 +92,13 @@ public class OwnerProfilepage extends Fragment {
                         }
                     } else {
                         usernameTextView.setText("Unknown Name");
+                        Log.w(TAG, "Owner document not found in Firestore.");
                     }
                 })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch owner name", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching owner name", e);
+                    Toast.makeText(getContext(), "Failed to fetch owner name", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void fetchTenantRequests() {
@@ -102,30 +109,41 @@ public class OwnerProfilepage extends Fragment {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot boardingHouse : queryDocumentSnapshots) {
                         String boardingHouseId = boardingHouse.getId();
-                        fetchOccupants(boardingHouseId);
+                        fetchOccupants(boardingHouseId, landlordId);
                     }
                 })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch boarding houses", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching boarding houses", e);
+                    Toast.makeText(getContext(), "Failed to fetch boarding houses", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    private void fetchOccupants(String boardingHouseId) {
-        String landlordId = mAuth.getCurrentUser().getUid();
-
+    private void fetchOccupants(String boardingHouseId, String landlordId) {
         db.collection("LandlordCollection").document(landlordId)
                 .collection("BoardingHouses").document(boardingHouseId)
                 .collection("Occupants")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot occupant : queryDocumentSnapshots) {
+                        String id = occupant.getId();
                         String firstName = occupant.getString("firstName");
                         String lastName = occupant.getString("lastName");
                         String status = occupant.getString("status");
 
-                        tenantRequestList.add(new TenantRequestModel(firstName, lastName, status));
+                        if (id == null || firstName == null || lastName == null || status == null) {
+                            Log.e(TAG, "Missing data in occupant document: " + occupant.getData());
+                            continue;
+                        }
+
+                        tenantRequestList.add(new TenantRequestModel(id, firstName, lastName, status, boardingHouseId, landlordId));
+                        Log.d(TAG, "Added tenant request: " + id);
                     }
                     requestsAdapter.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch occupants", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching occupants", e);
+                    Toast.makeText(getContext(), "Failed to fetch occupants", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void showPopupMenu(View view) {
