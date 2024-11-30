@@ -9,18 +9,13 @@
     android:background="@color/white">
 
     <!-- ScrollView for all components -->
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="14dp"
+            android:layout_marginBottom="20dp">
 
             <!-- Container for Search label and icon -->
             <LinearLayout
@@ -60,6 +55,8 @@
                 android:drawableEnd="@drawable/search2"
                 android:layout_marginTop="15dp"
                 android:hint="Enter search term"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
                 android:padding="10dp"
                 android:paddingStart="16dp"
                 android:background="@drawable/background1" />
@@ -89,12 +86,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchedItemsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="vertical"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"/>
+
+
         </LinearLayout>
-    </ScrollView>
+
 </RelativeLayout>

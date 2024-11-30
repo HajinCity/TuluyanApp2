@@ -7,15 +7,17 @@ public class TenantSearchedModel {
     private String selectionOption; // Selection option
     private String propertyPrice; // Combined price and selection option (computed field)
     private String boardingHouseId; // Unique ID for the boarding house
+    private String address; // Address of the boarding house
 
-    // Constructor
-    public TenantSearchedModel(String ownerName, String title, int price, String selectionOption, String boardingHouseId) {
+    // Updated Constructor with Address Field
+    public TenantSearchedModel(String ownerName, String title, int price, String selectionOption, String boardingHouseId, String address) {
         this.ownerName = ownerName;
         this.title = title;
         this.price = price;
         this.selectionOption = selectionOption;
         this.propertyPrice = "₱" + price + " (" + selectionOption + ")";
         this.boardingHouseId = boardingHouseId;
+        this.address = address;
     }
 
     // Getters and Setters
@@ -63,5 +65,13 @@ public class TenantSearchedModel {
 
     public void setBoardingHouseId(String boardingHouseId) {
         this.boardingHouseId = boardingHouseId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
