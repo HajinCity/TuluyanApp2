@@ -165,17 +165,39 @@ public class TenantRentNowBoardingHouse extends AppCompatActivity {
         requestData.put("tenantId", tenantId); // Original tenant ID for reference
         requestData.put("status", "Pending");
 
+        // Save to Landlord's Occupants Collection
         db.collection("LandlordCollection").document(landlordId)
                 .collection("BoardingHouses").document(boardingHouseId)
                 .collection("Occupants").document(occupantId)
                 .set(requestData)
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(this, "Request submitted successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
+                    saveToTenantCollection(requestData); // Call the new method
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error submitting request", e);
                     Toast.makeText(this, "Error submitting request. Please try again.", Toast.LENGTH_SHORT).show();
                 });
     }
+
+    // Save to TenantCollection and RentedBoardingHouse
+    private void saveToTenantCollection(Map<String, Object> requestData) {
+        // Create a new map for RentedBoardingHouse and copy all fields from requestData
+        Map<String, Object> rentedBoardingHouseData = new HashMap<>(requestData);
+
+        // Save tenant data to TenantCollection
+        db.collection("TenantCollection").document(tenantId)
+                .collection("RentedBoardingHouse").document(boardingHouseId)
+                .set(rentedBoardingHouseData)
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "Data saved to TenantCollection -> RentedBoardingHouse");
+                    // No toast messages here
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error saving to TenantCollection", e);
+                    // No toast messages here
+                });
+    }
+
 }
