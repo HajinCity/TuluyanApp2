@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,12 +18,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TenantRentNowBoardingHouse extends AppCompatActivity {
 
     private static final String TAG = "TenantRentNowBoarding";
 
-    private EditText firstNameEditText, lastNameEditText, mobileNumberEditText, emailAddressEditText;
+    private EditText firstNameEditText, lastNameEditText, mobileNumberEditText, emailAddressEditText, startDateEditText;
+    private FirebaseFirestore db;
+    private String landlordId;
+    private String boardingHouseId;
+    private String tenantId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +43,34 @@ public class TenantRentNowBoardingHouse extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
+
         // Initialize EditTexts
         firstNameEditText = findViewById(R.id.firstName);
         lastNameEditText = findViewById(R.id.lastName);
         mobileNumberEditText = findViewById(R.id.mobileNumber);
         emailAddressEditText = findViewById(R.id.emailAddress);
+        startDateEditText = findViewById(R.id.startDate);
 
-        // Initialize RadioGroup and Button
-        RadioGroup roomPreferenceGroup = findViewById(R.id.roomPreferenceGroup);
-        Button inPersonButton = findViewById(R.id.inPerson);
+        // Fetch Intent Extras
+        landlordId = getIntent().getStringExtra("LANDLORD_ID");
+        boardingHouseId = getIntent().getStringExtra("BOARDING_HOUSE_ID");
+        tenantId = getIntent().getStringExtra("TENANT_ID");
 
-        // Fetch Tenant ID from Intent
-        String tenantId = getIntent().getStringExtra("TENANT_ID");
-        Log.d(TAG, "Received tenantId: " + tenantId);
-
-        // Fetch Tenant Data
-        if (tenantId != null) {
-            fetchTenantData(tenantId);
-        } else {
-            Log.e(TAG, "No Tenant ID provided");
+        // Log and validate IDs
+        Log.d(TAG, "Landlord ID: " + landlordId + ", Boarding House ID: " + boardingHouseId + ", Tenant ID: " + tenantId);
+        if (landlordId == null || boardingHouseId == null || tenantId == null) {
+            Log.e(TAG, "Landlord ID, Boarding House ID, or Tenant ID is null. Cannot proceed.");
+            Toast.makeText(this, "Invalid data. Please try again.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        // Date picker functionality
-        EditText startDateEditText = findViewById(R.id.startDate);
+        // Fetch and populate tenant details
+        fetchTenantDetails();
+
+        // Date Picker for Start Date
         startDateEditText.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
@@ -70,7 +80,6 @@ public class TenantRentNowBoardingHouse extends AppCompatActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     TenantRentNowBoardingHouse.this,
                     (view, selectedYear, selectedMonth, selectedDay) -> {
-                        // Format the date as MM/DD/YYYY
                         String formattedDate = (selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear;
                         startDateEditText.setText(formattedDate);
                     },
@@ -79,105 +88,86 @@ public class TenantRentNowBoardingHouse extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        // Toggle button functionality for inPerson
-        inPersonButton.setOnClickListener(v -> {
-            boolean isSelected = inPersonButton.isSelected();
-            inPersonButton.setSelected(!isSelected);
-        });
-
-        // Handle Rent button click
+        // Submit Rent Request
         Button rentButton = findViewById(R.id.rentButton);
         rentButton.setOnClickListener(v -> {
-            if (validateInputs(roomPreferenceGroup, inPersonButton, startDateEditText)) {
-                // Show success message
-                showSuccessMessage();
-            } else {
-                // Inform the user of missing fields
-                Log.e(TAG, "Validation failed: Ensure all fields are filled and selections are made");
+            if (validateInputs()) {
+                addOccupantToFirestore();
             }
         });
 
-        // Handle Cancel button
+        // Cancel Button
         Button cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(v -> finish());
     }
 
-    private void fetchTenantData(String tenantId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private void fetchTenantDetails() {
         db.collection("TenantCollection").document(tenantId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                        Log.d(TAG, "Tenant details: " + documentSnapshot.getData());
 
-                        String firstName = documentSnapshot.getString("firstName");
-                        String lastName = documentSnapshot.getString("lastName");
-                        String contactNo = documentSnapshot.getString("contactNo");
-                        String email = documentSnapshot.getString("email");
-
-                        // Populate the EditText fields
-                        firstNameEditText.setText(firstName);
-                        lastNameEditText.setText(lastName);
-                        mobileNumberEditText.setText(contactNo);
-                        emailAddressEditText.setText(email);
+                        // Populate the fields
+                        firstNameEditText.setText(documentSnapshot.getString("firstName"));
+                        lastNameEditText.setText(documentSnapshot.getString("lastName"));
+                        mobileNumberEditText.setText(documentSnapshot.getString("contactNo"));
+                        emailAddressEditText.setText(documentSnapshot.getString("email"));
                     } else {
-                        Log.e(TAG, "No tenant data found for tenantId: " + tenantId);
+                        Log.e(TAG, "Tenant document does not exist.");
+                        Toast.makeText(this, "Failed to fetch tenant details.", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error fetching tenant data", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching tenant details: ", e);
+                    Toast.makeText(this, "Error fetching tenant details.", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    private boolean validateInputs(RadioGroup roomPreferenceGroup, Button inPersonButton, EditText startDateEditText) {
-        // Check if personal details are filled
-        if (firstNameEditText.getText().toString().trim().isEmpty()) {
-            firstNameEditText.setError("First Name is required");
-            return false;
-        }
-        if (lastNameEditText.getText().toString().trim().isEmpty()) {
-            lastNameEditText.setError("Last Name is required");
-            return false;
-        }
-        if (mobileNumberEditText.getText().toString().trim().isEmpty()) {
-            mobileNumberEditText.setError("Mobile Number is required");
-            return false;
-        }
-        if (emailAddressEditText.getText().toString().trim().isEmpty()) {
-            emailAddressEditText.setError("Email Address is required");
-            return false;
-        }
+    private boolean validateInputs() {
+        String firstName = firstNameEditText.getText().toString().trim();
+        String lastName = lastNameEditText.getText().toString().trim();
+        String mobileNumber = mobileNumberEditText.getText().toString().trim();
+        String email = emailAddressEditText.getText().toString().trim();
+        String startDate = startDateEditText.getText().toString().trim();
 
-        // Check if a room preference is selected
-        if (roomPreferenceGroup.getCheckedRadioButtonId() == -1) {
-            Log.e(TAG, "No room preference selected");
+        if (firstName.isEmpty() || lastName.isEmpty() || mobileNumber.isEmpty() || email.isEmpty() || startDate.isEmpty()) {
+            Toast.makeText(this, "All fields must be filled.", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        // Check if start date is selected
-        if (startDateEditText.getText().toString().trim().isEmpty()) {
-            startDateEditText.setError("Start Date is required");
-            return false;
-        }
-
-        // Check if in-person payment method is selected
-        if (!inPersonButton.isSelected()) {
-            Log.e(TAG, "In-person payment method not selected");
-            return false;
-        }
-
-        // All validations passed
         return true;
     }
 
-    private void showSuccessMessage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(R.layout.dialog_success)
-                .setPositiveButton("OK", (dialog, id) -> {
-                    dialog.dismiss();
-                    // Optionally finish the activity
+    private void addOccupantToFirestore() {
+        String firstName = firstNameEditText.getText().toString().trim();
+        String lastName = lastNameEditText.getText().toString().trim();
+        String mobileNumber = mobileNumberEditText.getText().toString().trim();
+        String email = emailAddressEditText.getText().toString().trim();
+        String startDate = startDateEditText.getText().toString().trim();
+
+        Map<String, Object> occupantData = new HashMap<>();
+        occupantData.put("firstName", firstName);
+        occupantData.put("lastName", lastName);
+        occupantData.put("mobileNumber", mobileNumber);
+        occupantData.put("email", email);
+        occupantData.put("startDate", startDate);
+        occupantData.put("status", "Pending");
+        occupantData.put("boardingHouseId", boardingHouseId);
+        occupantData.put("landlordId", landlordId);
+
+        db.collection("LandlordCollection")
+                .document(landlordId)
+                .collection("BoardingHouses")
+                .document(boardingHouseId)
+                .collection("Occupants")
+                .add(occupantData)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Request sent successfully.", Toast.LENGTH_SHORT).show();
                     finish();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error adding occupant: ", e);
+                    Toast.makeText(this, "Error sending request. Please try again.", Toast.LENGTH_SHORT).show();
                 });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }

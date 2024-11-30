@@ -13,24 +13,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tuluyanapp.MainActivity2;
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.adapters.TenantRequestApplicationAdapter;
+import com.example.tuluyanapp.models.TenantRequestModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OwnerProfilepage extends Fragment {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private TextView usernameTextView;
-    private OwnerProfileClass ownerProfile;
-    private ListenerRegistration listenerRegistration; // Declare ListenerRegistration
+    private RecyclerView requestsRecyclerView;
+    private TenantRequestApplicationAdapter requestsAdapter;
+    private List<TenantRequestModel> tenantRequestList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +44,6 @@ public class OwnerProfilepage extends Fragment {
         // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
-        // Initialize OwnerProfileClass
-        ownerProfile = new OwnerProfileClass();
     }
 
     @Override
@@ -51,57 +53,79 @@ public class OwnerProfilepage extends Fragment {
         // Find views
         usernameTextView = view.findViewById(R.id.username);
         ImageView settingsIcon = view.findViewById(R.id.Owner_settings_icon);
+        requestsRecyclerView = view.findViewById(R.id.requestsRecyclerView);
+
+        // Set up RecyclerView
+        tenantRequestList = new ArrayList<>();
+        requestsAdapter = new TenantRequestApplicationAdapter(tenantRequestList);
+        requestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        requestsRecyclerView.setAdapter(requestsAdapter);
 
         // Fetch and display user data
-        fetchOwnerName(); // Call method to fetch name
+        fetchOwnerName(); // Fetch owner name
+        fetchTenantRequests(); // Fetch tenant requests
 
         // Set up settings icon click listener for popup menu
-        settingsIcon.setOnClickListener(v -> showPopupMenu(v));
+        settingsIcon.setOnClickListener(this::showPopupMenu);
 
         return view;
     }
 
     private void fetchOwnerName() {
         String uid = mAuth.getCurrentUser().getUid();
-        ownerProfile.setLandlordUID(uid);  // Set the landlord UID in OwnerProfileClass
 
-        DocumentReference docRef = db.collection("LandlordCollection").document(uid);
+        db.collection("LandlordCollection").document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String firstName = documentSnapshot.getString("FirstName");
+                        String lastName = documentSnapshot.getString("LastName");
 
-        listenerRegistration = docRef.addSnapshotListener((documentSnapshot, error) -> {
-            if (error != null) {
-                // Log the error
-                Log.e("OwnerProfilepage", "Error fetching data: " + error.getMessage());
-                Toast.makeText(getContext(), "Error fetching data: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                return;
-            }
+                        if (firstName != null) {
+                            String fullName = (lastName != null && !lastName.isEmpty()) ? firstName + " " + lastName : firstName;
+                            usernameTextView.setText(fullName);
+                        } else {
+                            usernameTextView.setText("Unknown Name");
+                        }
+                    } else {
+                        usernameTextView.setText("Unknown Name");
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch owner name", Toast.LENGTH_SHORT).show());
+    }
 
-            if (documentSnapshot != null && documentSnapshot.exists()) {
-                Log.d("OwnerProfilepage", "DocumentSnapshot data: " + documentSnapshot.getData());
+    private void fetchTenantRequests() {
+        String landlordId = mAuth.getCurrentUser().getUid();
 
-                // Fetch the fields individually to ensure they are retrieved correctly
-                String firstName = documentSnapshot.getString("FirstName");
-                String lastName = documentSnapshot.getString("LastName");
+        db.collection("LandlordCollection").document(landlordId).collection("BoardingHouses")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot boardingHouse : queryDocumentSnapshots) {
+                        String boardingHouseId = boardingHouse.getId();
+                        fetchOccupants(boardingHouseId);
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch boarding houses", Toast.LENGTH_SHORT).show());
+    }
 
-                // Set the values in the ownerProfile object
-                ownerProfile.setFirstName(firstName);
-                ownerProfile.setLastName(lastName);
+    private void fetchOccupants(String boardingHouseId) {
+        String landlordId = mAuth.getCurrentUser().getUid();
 
-                // Log the retrieved names and UID for debugging
-                Log.d("OwnerProfilepage", "First Name: " + firstName + ", Last Name: " + lastName);
-                Log.d("OwnerProfilepage", "Landlord UID: " + ownerProfile.getLandlordUID());
+        db.collection("LandlordCollection").document(landlordId)
+                .collection("BoardingHouses").document(boardingHouseId)
+                .collection("Occupants")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot occupant : queryDocumentSnapshots) {
+                        String firstName = occupant.getString("firstName");
+                        String lastName = occupant.getString("lastName");
+                        String status = occupant.getString("status");
 
-                if (firstName != null) {
-                    String fullName = (lastName != null && !lastName.isEmpty()) ? firstName + " " + lastName : firstName;
-                    usernameTextView.setText(fullName);
-                } else {
-                    Log.d("OwnerProfilepage", "First Name is null or empty");
-                    usernameTextView.setText("Unknown Name");
-                }
-            } else {
-                Log.d("OwnerProfilepage", "Document does not exist or is empty");
-                usernameTextView.setText("Unknown Name");
-            }
-        });
+                        tenantRequestList.add(new TenantRequestModel(firstName, lastName, status));
+                    }
+                    requestsAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to fetch occupants", Toast.LENGTH_SHORT).show());
     }
 
     private void showPopupMenu(View view) {
@@ -126,14 +150,5 @@ public class OwnerProfilepage extends Fragment {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Remove Firestore listener when fragment is destroyed
-        if (listenerRegistration != null) {
-            listenerRegistration.remove();
-        }
     }
 }

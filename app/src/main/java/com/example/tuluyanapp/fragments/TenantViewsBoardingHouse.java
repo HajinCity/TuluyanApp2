@@ -24,6 +24,7 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
     private Double latitude = null;
     private Double longitude = null;
     private String tenantId = null; // Variable to hold the tenantId
+    private String landlordId = null; // Variable to hold the landlordId
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +88,15 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
         // Navigate to TenantRentNowBoardingHouse when the Rent button is clicked
         Button rentButton = findViewById(R.id.rentButton);
         rentButton.setOnClickListener(v -> {
-            if (tenantId != null) {
+            if (tenantId != null && landlordId != null) {
                 Intent intent = new Intent(TenantViewsBoardingHouse.this, TenantRentNowBoardingHouse.class);
-                // Pass the tenantId and any other necessary data to the next activity
+                // Pass the tenantId, landlordId, and boardingHouseId to the next activity
                 intent.putExtra("TENANT_ID", tenantId);
+                intent.putExtra("LANDLORD_ID", landlordId);
                 intent.putExtra("BOARDING_HOUSE_ID", boardingHouseId);
                 startActivity(intent);
             } else {
-                Log.e(TAG, "Tenant ID is null, cannot proceed");
+                Log.e(TAG, "Tenant ID or Landlord ID is null, cannot proceed");
             }
         });
     }
@@ -121,13 +123,18 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         for (QueryDocumentSnapshot landlordDoc : task.getResult()) {
+                            String potentialLandlordId = landlordDoc.getId();
+
                             db.collection("LandlordCollection")
-                                    .document(landlordDoc.getId())
+                                    .document(potentialLandlordId)
                                     .collection("BoardingHouses")
                                     .document(boardingHouseId)
                                     .get()
                                     .addOnSuccessListener(documentSnapshot -> {
                                         if (documentSnapshot.exists()) {
+                                            landlordId = potentialLandlordId; // Save the landlordId
+                                            Log.d(TAG, "Fetched landlordId: " + landlordId);
+
                                             String title = documentSnapshot.getString("title");
                                             String address = documentSnapshot.getString("address");
                                             String description = documentSnapshot.getString("description");
