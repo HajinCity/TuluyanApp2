@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TuluyanApp">
         <activity
+            android:name=".fragments.TenantApplicationView"
+            android:exported="false" />
+        <activity
             android:name=".fragments.OwnerViewsTenantApplication"
             android:exported="false" />
 
