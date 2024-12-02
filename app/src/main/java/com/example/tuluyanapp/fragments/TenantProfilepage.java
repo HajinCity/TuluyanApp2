@@ -1,7 +1,7 @@
 package com.example.tuluyanapp.fragments;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tuluyanapp.MainActivity2;
 import com.example.tuluyanapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,7 +48,7 @@ public class TenantProfilepage extends Fragment {
         // Fetch and display tenant details
         fetchTenantDetails();
 
-        // Set up button listeners (Help, Settings, Edit Profile)
+        // Set up button listeners (Help, Settings, Edit Profile, Logout)
         setUpButtons(view);
 
         return view;
@@ -85,6 +86,15 @@ public class TenantProfilepage extends Fragment {
             });
         }
 
+        // Set up Applications button
+        View applicationsButton = view.findViewById(R.id.applications);
+        if (applicationsButton != null) {
+            applicationsButton.setOnClickListener(v -> {
+                Intent applicationsIntent = new Intent(getActivity(), TenantApplicationView.class);
+                startActivity(applicationsIntent);
+            });
+        }
+
         // Set up Settings button
         View settingsButton = view.findViewById(R.id.settings);
         if (settingsButton != null) {
@@ -100,6 +110,17 @@ public class TenantProfilepage extends Fragment {
             editProfileButton.setOnClickListener(v -> {
                 Intent editProfileIntent = new Intent(getActivity(), TenantEditProfile.class);
                 startActivity(editProfileIntent);
+            });
+        }
+
+        // Set up Logout button
+        View logoutButton = view.findViewById(R.id.logout);
+        if (logoutButton != null) {
+            logoutButton.setOnClickListener(v -> {
+                auth.signOut();
+                Intent logoutIntent = new Intent(getActivity(), MainActivity2.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(logoutIntent);
             });
         }
     }

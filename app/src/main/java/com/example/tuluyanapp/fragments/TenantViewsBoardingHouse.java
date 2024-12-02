@@ -23,19 +23,17 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
     private ImageView topImage, ownerAvatar;
     private Double latitude = null;
     private Double longitude = null;
-    private String tenantId = null; // Variable to hold the tenantId
-    private String landlordId = null; // Variable to hold the landlordId
+    private String tenantId = null;
+    private String landlordId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_views_boarding_house);
 
-        // Back Button Logic
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
 
-        // Initialize Firebase Auth to get the logged-in user's UID
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId != null) {
             fetchTenantId(userId);
@@ -43,11 +41,9 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
             Log.e(TAG, "No logged-in user found");
         }
 
-        // Other initializations...
         String boardingHouseId = getIntent().getStringExtra("BOARDING_HOUSE_ID");
         String ownerNameText = getIntent().getStringExtra("ownerName");
         String paymentOptionText = getIntent().getStringExtra("paymentOption");
-        String distanceTextValue = getIntent().getStringExtra("distance");
 
         apartmentName = findViewById(R.id.apartmentName);
         apartmentPrice = findViewById(R.id.apartmentPrice);
@@ -56,17 +52,10 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
         distanceText = findViewById(R.id.distanceText);
         ownerName = findViewById(R.id.ownerName);
         paymentOption = findViewById(R.id.paymentOption);
-        topImage = findViewById(R.id.topImage); // Static image
-        ownerAvatar = findViewById(R.id.ownerAvatar);
-
-        if (distanceTextValue != null) {
-            distanceText.setText(distanceTextValue);
-        }
 
         if (paymentOptionText != null) {
             paymentOption.setText(paymentOptionText);
         }
-
         if (ownerNameText != null) {
             ownerName.setText(ownerNameText);
         }
@@ -85,12 +74,10 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Navigate to TenantRentNowBoardingHouse when the Rent button is clicked
         Button rentButton = findViewById(R.id.rentButton);
         rentButton.setOnClickListener(v -> {
             if (tenantId != null && landlordId != null) {
                 Intent intent = new Intent(TenantViewsBoardingHouse.this, TenantRentNowBoardingHouse.class);
-                // Pass the tenantId, landlordId, and boardingHouseId to the next activity
                 intent.putExtra("TENANT_ID", tenantId);
                 intent.putExtra("LANDLORD_ID", landlordId);
                 intent.putExtra("BOARDING_HOUSE_ID", boardingHouseId);
@@ -117,7 +104,6 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
 
     private void fetchBoardingHouseData(String boardingHouseId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         db.collection("LandlordCollection")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -132,8 +118,7 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
                                     .get()
                                     .addOnSuccessListener(documentSnapshot -> {
                                         if (documentSnapshot.exists()) {
-                                            landlordId = potentialLandlordId; // Save the landlordId
-                                            Log.d(TAG, "Fetched landlordId: " + landlordId);
+                                            landlordId = potentialLandlordId;
 
                                             String title = documentSnapshot.getString("title");
                                             String address = documentSnapshot.getString("address");
@@ -143,9 +128,6 @@ public class TenantViewsBoardingHouse extends AppCompatActivity {
                                             latitude = documentSnapshot.getDouble("latitude");
                                             longitude = documentSnapshot.getDouble("longitude");
 
-                                            Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
-
-                                            // Update UI
                                             apartmentName.setText(title);
                                             addressDetails.setText(address);
                                             descriptionDetails.setText(description);
