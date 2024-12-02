@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/view_request"
+        android:title="@string/view_request"
+        android:icon="@drawable/eye"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/approve"
+        android:title="@string/approve_request"
+        android:icon="@drawable/tick_circle"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/reject"
+        android:title="@string/reject_request"
+        android:icon="@drawable/trash"
+        app:showAsAction="ifRoom" />
+</menu>

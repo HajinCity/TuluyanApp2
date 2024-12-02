@@ -2,7 +2,7 @@
     android:layout_width="320dp"
     android:layout_height="320dp"
     android:background="@drawable/rounded_background"
-    android:padding="8dp"
+    android:padding="10dp"
     android:clipToPadding="false">
 
     <!-- ImageView with Rounded Corners -->
@@ -20,7 +20,8 @@
             android:scaleType="centerCrop"
             android:contentDescription="@string/app"
             android:src="@drawable/house1"
-            android:clipToOutline="true" />
+            android:clipToOutline="true"
+            />
     </FrameLayout>
 
     <!-- Overlay for the background -->

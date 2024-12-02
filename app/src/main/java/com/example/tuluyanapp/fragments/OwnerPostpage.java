@@ -54,7 +54,7 @@ public class OwnerPostpage extends Fragment {
 
     // UI Components
     private MapView mapView;
-    private EditText addressEditText, titleEditText, priceEditText, slotsEditText, descriptionEditText, otherDetailsEditText;
+    private EditText addressEditText, titleEditText, priceEditText, descriptionEditText, otherDetailsEditText;
     private Spinner paymentOptionsSpinner, selectionOptionsSpinner;
     private View postButton;
 
@@ -73,7 +73,6 @@ public class OwnerPostpage extends Fragment {
         addressEditText = view.findViewById(R.id.board_address);
         titleEditText = view.findViewById(R.id.board_title);
         priceEditText = view.findViewById(R.id.board_price);
-        slotsEditText = view.findViewById(R.id.board_slots);
         descriptionEditText = view.findViewById(R.id.board_description);
         otherDetailsEditText = view.findViewById(R.id.board_otherDetails);
         paymentOptionsSpinner = view.findViewById(R.id.board_paymentOptions);
@@ -169,25 +168,22 @@ public class OwnerPostpage extends Fragment {
 
         String title = titleEditText.getText().toString();
         String priceStr = priceEditText.getText().toString();
-        String slotsStr = slotsEditText.getText().toString();
         String address = addressEditText.getText().toString();
         String description = descriptionEditText.getText().toString();
         String otherDetails = otherDetailsEditText.getText().toString();
         String paymentOption = paymentOptionsSpinner.getSelectedItem().toString();
         String selectionOption = selectionOptionsSpinner.getSelectedItem().toString();
 
-        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(priceStr) || TextUtils.isEmpty(slotsStr) || TextUtils.isEmpty(address)) {
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(priceStr) || TextUtils.isEmpty(address)) {
             Toast.makeText(getContext(), "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         double price;
-        int slots;
         try {
             price = Double.parseDouble(priceStr);
-            slots = Integer.parseInt(slotsStr);
         } catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Invalid price or slots input", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Invalid price input", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -202,7 +198,6 @@ public class OwnerPostpage extends Fragment {
         boardingHouse.put("title", title);
         boardingHouse.put("price", price);
         boardingHouse.put("paymentOption", paymentOption);
-        boardingHouse.put("slots", slots);
         boardingHouse.put("address", address);
         boardingHouse.put("latitude", currentLocation != null ? currentLocation.getLatitude() : null);
         boardingHouse.put("longitude", currentLocation != null ? currentLocation.getLongitude() : null);
@@ -228,7 +223,6 @@ public class OwnerPostpage extends Fragment {
     private void clearFields() {
         titleEditText.setText("");
         priceEditText.setText("");
-        slotsEditText.setText("");
         addressEditText.setText("");
         descriptionEditText.setText("");
         otherDetailsEditText.setText("");
