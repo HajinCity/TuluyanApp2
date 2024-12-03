@@ -1,66 +1,110 @@
 package com.example.tuluyanapp.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.tuluyanapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OwnerHomepage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OwnerHomepage extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public OwnerHomepage() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment tenantHomepage.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OwnerHomepage newInstance(String param1, String param2) {
-        OwnerHomepage fragment = new OwnerHomepage();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private TextView textViewTotalListings;
+    private TextView textViewFirstName;
+    private FirebaseFirestore db;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_owner_homepage, container, false);
+        View view = inflater.inflate(R.layout.fragment_owner_homepage, container, false);
+
+        // Initialize Firestore and TextViews
+        db = FirebaseFirestore.getInstance();
+        textViewTotalListings = view.findViewById(R.id.textViewTotalListings);
+        textViewFirstName = view.findViewById(R.id.textView25);
+
+        // Fetch and display total listings count
+        fetchTotalListingsCount();
+
+        // Fetch and display landlord's first name
+        fetchLandlordFirstName();
+
+        return view;
+    }
+
+    private void fetchTotalListingsCount() {
+        // Get the currently logged-in landlord's UID
+        String landlordUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if (landlordUID == null) {
+            Log.e("FirestoreError", "Landlord UID is null. Ensure the user is logged in.");
+            textViewTotalListings.setText("Error");
+            return;
+        }
+
+        // Fetch data from Firestore
+        db.collection("LandlordCollection")
+                .document(landlordUID)
+                .collection("BoardingHouses")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        int totalListings = task.getResult().size(); // Count of boarding houses
+                        textViewTotalListings.setText(String.valueOf(totalListings));
+                        Log.d("FirestoreSuccess", "Total listings: " + totalListings);
+                    } else {
+                        textViewTotalListings.setText("0"); // Handle empty data
+                        Log.d("FirestoreFailure", "Query succeeded but no data found.");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    textViewTotalListings.setText("Error");
+                    Log.e("FirestoreError", "Error fetching data", e);
+                });
+    }
+
+    private void fetchLandlordFirstName() {
+        // Get the currently logged-in landlord's UID
+        String landlordUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if (landlordUID == null) {
+            Log.e("FirestoreError", "Landlord UID is null. Ensure the user is logged in.");
+            textViewFirstName.setText("Error");
+            return;
+        }
+
+        // Fetch the first name from Firestore
+        db.collection("LandlordCollection")
+                .document(landlordUID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        DocumentSnapshot snapshot = task.getResult();
+                        if (snapshot.exists()) {
+                            String firstName = snapshot.getString("FirstName");
+                            textViewFirstName.setText(firstName); // Set the FirstName to the TextView
+                            Log.d("FirestoreSuccess", "First name: " + firstName);
+                        } else {
+                            textViewFirstName.setText("Unknown");
+                            Log.d("FirestoreFailure", "Document does not exist.");
+                        }
+                    } else {
+                        textViewFirstName.setText("Error");
+                        Log.d("FirestoreFailure", "Error fetching document.");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    textViewFirstName.setText("Error");
+                    Log.e("FirestoreError", "Error fetching data", e);
+                });
     }
 }

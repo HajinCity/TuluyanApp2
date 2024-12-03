@@ -2,6 +2,7 @@ package com.example.tuluyanapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -73,7 +74,7 @@ public class TenantRequestApplicationAdapter extends RecyclerView.Adapter<Tenant
         if (itemId == R.id.view_request) {
             // Navigate to OwnerViewsTenantApplication
             Intent intent = new Intent(context, OwnerViewsTenantApplication.class);
-            intent.putExtra("occupantId", request.getId()); // Use the occupant ID
+            intent.putExtra("occupantId", request.getId());
             intent.putExtra("firstName", request.getFirstName());
             intent.putExtra("lastName", request.getLastName());
             intent.putExtra("status", request.getStatus());
@@ -82,18 +83,30 @@ public class TenantRequestApplicationAdapter extends RecyclerView.Adapter<Tenant
             context.startActivity(intent);
             return true;
 
-        } else if (itemId == R.id.approve) {
+        }else if (itemId == R.id.approve) {
             // Approve request
             db.collection("LandlordCollection").document(request.getLandlordId())
                     .collection("BoardingHouses").document(request.getBoardingHouseId())
                     .collection("Occupants").document(request.getId())
                     .update("status", "Approved")
                     .addOnSuccessListener(unused -> {
-                        Toast.makeText(context, "Request Approved", Toast.LENGTH_SHORT).show();
-                        tenantRequests.remove(position);
-                        notifyItemRemoved(position);
+                        // Also update TenantCollection with new structure
+                        db.collection("TenantCollection").document(request.getId()) // Use request.getId() for tenant ID
+                                .collection("RentedBoardingHouse").document(request.getLandlordId()) // Use landlordId as the document ID
+                                .update("status", "Approved")
+                                .addOnSuccessListener(tenantUpdateUnused -> {
+                                    Toast.makeText(context, "Request Approved", Toast.LENGTH_SHORT).show();
+                                    tenantRequests.remove(position);
+                                    notifyItemRemoved(position);
+                                })
+                                .addOnFailureListener(tenantUpdateError -> {
+                                    Log.e("Error", "Failed to update TenantCollection: " + tenantUpdateError.getMessage());
+                                    Toast.makeText(context, "Failed to update TenantCollection.", Toast.LENGTH_SHORT).show();
+                                });
                     })
-                    .addOnFailureListener(e -> Toast.makeText(context, "Failed to approve request: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Failed to approve request: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
             return true;
 
         } else if (itemId == R.id.reject) {
@@ -103,14 +116,26 @@ public class TenantRequestApplicationAdapter extends RecyclerView.Adapter<Tenant
                     .collection("Occupants").document(request.getId())
                     .update("status", "Rejected")
                     .addOnSuccessListener(unused -> {
-                        Toast.makeText(context, "Request Rejected", Toast.LENGTH_SHORT).show();
-                        tenantRequests.remove(position);
-                        notifyItemRemoved(position);
+                        // Also update TenantCollection with new structure
+                        db.collection("TenantCollection").document(request.getId()) // Use request.getId() for tenant ID
+                                .collection("RentedBoardingHouse").document(request.getLandlordId()) // Use landlordId as the document ID
+                                .update("status", "Rejected")
+                                .addOnSuccessListener(tenantUpdateUnused -> {
+                                    Toast.makeText(context, "Request Rejected", Toast.LENGTH_SHORT).show();
+                                    tenantRequests.remove(position);
+                                    notifyItemRemoved(position);
+                                })
+                                .addOnFailureListener(tenantUpdateError -> {
+                                    Log.e("Error", "Failed to update TenantCollection: " + tenantUpdateError.getMessage());
+                                    Toast.makeText(context, "Failed to update TenantCollection.", Toast.LENGTH_SHORT).show();
+                                });
                     })
-                    .addOnFailureListener(e -> Toast.makeText(context, "Failed to reject request: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Failed to reject request: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
             return true;
-
-        } else {
+        }
+        else {
             return false;
         }
     }

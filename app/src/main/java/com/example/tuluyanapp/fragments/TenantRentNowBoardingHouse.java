@@ -180,24 +180,60 @@ public class TenantRentNowBoardingHouse extends AppCompatActivity {
                 });
     }
 
-    // Save to TenantCollection and RentedBoardingHouse
-    private void saveToTenantCollection(Map<String, Object> requestData) {
-        // Create a new map for RentedBoardingHouse and copy all fields from requestData
-        Map<String, Object> rentedBoardingHouseData = new HashMap<>(requestData);
 
-        // Save tenant data to TenantCollection
-        db.collection("TenantCollection").document(tenantId)
-                .collection("RentedBoardingHouse").document(boardingHouseId)
-                .set(rentedBoardingHouseData)
-                .addOnSuccessListener(unused -> {
-                    Log.d(TAG, "Data saved to TenantCollection -> RentedBoardingHouse");
-                    // No toast messages here
-                    finish();
+    private void saveToTenantCollection(Map<String, Object> requestData) {
+        // Add boardingHouseId as a field in the requestData map
+        requestData.put("boardingHouseId", boardingHouseId);
+
+        // Fetch the price and title of the boarding house from Firestore
+        db.collection("LandlordCollection").document(landlordId)
+                .collection("BoardingHouses").document(boardingHouseId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Extract title from the boarding house document
+                        String title = documentSnapshot.getString("title");
+                        Object priceObj = documentSnapshot.get("price");
+
+                        // Handle price field as a number (e.g., Double or Long)
+                        String price = null;
+                        if (priceObj instanceof Double) {
+                            price = String.valueOf(priceObj);
+                        } else if (priceObj instanceof Long) {
+                            price = String.valueOf(priceObj);
+                        }
+
+                        // Add title and price to the requestData map
+                        if (title != null) {
+                            requestData.put("title", title);
+                        }
+                        if (price != null) {
+                            requestData.put("price", price);
+                        }
+
+                        // Save tenant data to TenantCollection -> RentedBoardingHouse
+                        db.collection("TenantCollection").document(tenantId)
+                                .collection("RentedBoardingHouse").document(landlordId)
+                                .set(requestData)
+                                .addOnSuccessListener(unused -> {
+                                    Log.d(TAG, "Data saved to TenantCollection -> RentedBoardingHouse");
+                                    finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Error saving to TenantCollection", e);
+                                });
+                    } else {
+                        Log.w(TAG, "Boarding house details not found for ID: " + boardingHouseId);
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error saving to TenantCollection", e);
-                    // No toast messages here
+                    Log.e(TAG, "Error fetching boarding house details", e);
+                    Toast.makeText(this, "Error fetching boarding house details.", Toast.LENGTH_SHORT).show();
                 });
     }
+
+
+
+
 
 }

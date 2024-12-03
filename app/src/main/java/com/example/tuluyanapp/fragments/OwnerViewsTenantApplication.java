@@ -124,20 +124,32 @@ public class OwnerViewsTenantApplication extends AppCompatActivity {
                 });
     }
 
-    private void updateRequestStatus(String landlordId, String boardingHouseId, String occupantId, String status) {
+    private void updateRequestStatus(String landlordId, String boardingHouseId, String tenantId, String status) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // Update status in LandlordCollection
         db.collection("LandlordCollection").document(landlordId)
                 .collection("BoardingHouses").document(boardingHouseId)
-                .collection("Occupants").document(occupantId)
+                .collection("Occupants").document(tenantId) // Updated to use tenantId
                 .update("status", status)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Request " + status, Toast.LENGTH_SHORT).show();
-                    finish();
+                    // Also update status in TenantCollection
+                    db.collection("TenantCollection").document(tenantId)
+                            .collection("RentedBoardingHouse").document(landlordId) // Updated to match new structure
+                            .update("status", status)
+                            .addOnSuccessListener(tenantUpdateUnused -> {
+                                Toast.makeText(this, "Request " + status, Toast.LENGTH_SHORT).show();
+                                finish();
+                            })
+                            .addOnFailureListener(tenantUpdateError -> {
+                                Log.e(TAG, "Failed to update TenantCollection: " + tenantUpdateError.getMessage());
+                                Toast.makeText(this, "Failed to update TenantCollection.", Toast.LENGTH_SHORT).show();
+                            });
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error updating status: " + e.getMessage());
-                    Toast.makeText(this, "Error updating status", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Failed to update LandlordCollection: " + e.getMessage());
+                    Toast.makeText(this, "Failed to update LandlordCollection.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 }

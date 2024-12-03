@@ -1,6 +1,7 @@
 package com.example.tuluyanapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tuluyanapp.R;
+import com.example.tuluyanapp.fragments.TenantViewsBoardingHouse;
 import com.example.tuluyanapp.models.TenantSearchedModel;
 
 import java.util.List;
@@ -40,14 +42,17 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TenantSearchedModel result = searchResults.get(position);
 
-        // Set property title
         holder.title.setText(result.getTitle());
-
-        // Set price and option in one line
         holder.price.setText(String.format("PHP %s/  - %s", result.getPrice(), result.getSelectionOption()));
-
-        // Set owner name
         holder.owner.setText(result.getOwnerName());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TenantViewsBoardingHouse.class);
+            intent.putExtra("BOARDING_HOUSE_ID", result.getBoardingHouseId());
+            intent.putExtra("ownerName", result.getOwnerName());
+            intent.putExtra("paymentOption", result.getSelectionOption());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -60,10 +65,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            title = itemView.findViewById(R.id.itemTitle); // Property title
-            price = itemView.findViewById(R.id.itemPrice); // Price and option combined
-            owner = itemView.findViewById(R.id.itemOwner); // Owner's name
+            title = itemView.findViewById(R.id.itemTitle);
+            price = itemView.findViewById(R.id.itemPrice);
+            owner = itemView.findViewById(R.id.itemOwner);
         }
     }
 }

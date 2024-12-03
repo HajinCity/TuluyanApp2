@@ -74,6 +74,14 @@ public class OwnerProfilepage extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        tenantRequestList.clear(); // Clear the existing list
+        requestsAdapter.notifyDataSetChanged(); // Clear the RecyclerView
+        fetchTenantRequests();    // Fetch the updated tenant requests
+    }
+
     private void fetchOwnerName() {
         String uid = mAuth.getCurrentUser().getUid();
 
@@ -104,6 +112,10 @@ public class OwnerProfilepage extends Fragment {
     private void fetchTenantRequests() {
         String landlordId = mAuth.getCurrentUser().getUid();
 
+        // Clear the list before fetching data
+        tenantRequestList.clear();
+        requestsAdapter.notifyDataSetChanged(); // Immediately clear the RecyclerView
+
         db.collection("LandlordCollection").document(landlordId).collection("BoardingHouses")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -130,15 +142,13 @@ public class OwnerProfilepage extends Fragment {
                         String lastName = occupant.getString("lastName");
                         String status = occupant.getString("status");
 
-                        if (id == null || firstName == null || lastName == null || status == null) {
-                            Log.e(TAG, "Missing data in occupant document: " + occupant.getData());
-                            continue;
+                        // Check for duplicates and status
+                        if (status != null && status.equals("Pending") &&
+                                tenantRequestList.stream().noneMatch(t -> t.getId().equals(id))) {
+                            tenantRequestList.add(new TenantRequestModel(id, firstName, lastName, status, boardingHouseId, landlordId));
                         }
-
-                        tenantRequestList.add(new TenantRequestModel(id, firstName, lastName, status, boardingHouseId, landlordId));
-                        Log.d(TAG, "Added tenant request: " + id);
                     }
-                    requestsAdapter.notifyDataSetChanged();
+                    requestsAdapter.notifyDataSetChanged(); // Notify adapter about changes
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error fetching occupants", e);
