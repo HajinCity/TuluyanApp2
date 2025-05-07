@@ -8,9 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.HashMap;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.example.tuluyanapp.R;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class OwnerViewsTenantApplication extends AppCompatActivity {
 
@@ -127,16 +134,30 @@ public class OwnerViewsTenantApplication extends AppCompatActivity {
     private void updateRequestStatus(String landlordId, String boardingHouseId, String tenantId, String status) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Update status in LandlordCollection
+        // Get current timestamp as string
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        // Create the map for updates
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("status", status);
+
+        // Add approvedDate or rejectedDate based on status
+        if (status.equals("Approved")) {
+            updates.put("approvedDate", currentDate);
+        } else if (status.equals("Rejected")) {
+            updates.put("rejectedDate", currentDate);
+        }
+
+        // Update in LandlordCollection
         db.collection("LandlordCollection").document(landlordId)
                 .collection("BoardingHouses").document(boardingHouseId)
-                .collection("Occupants").document(tenantId) // Updated to use tenantId
-                .update("status", status)
+                .collection("Occupants").document(tenantId)
+                .update(updates)
                 .addOnSuccessListener(unused -> {
-                    // Also update status in TenantCollection
+                    // Update in TenantCollection
                     db.collection("TenantCollection").document(tenantId)
-                            .collection("RentedBoardingHouse").document(landlordId) // Updated to match new structure
-                            .update("status", status)
+                            .collection("RentedBoardingHouse").document(landlordId)
+                            .update(updates)
                             .addOnSuccessListener(tenantUpdateUnused -> {
                                 Toast.makeText(this, "Request " + status, Toast.LENGTH_SHORT).show();
                                 finish();
@@ -151,5 +172,6 @@ public class OwnerViewsTenantApplication extends AppCompatActivity {
                     Toast.makeText(this, "Failed to update LandlordCollection.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 }
